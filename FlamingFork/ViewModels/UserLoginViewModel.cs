@@ -43,7 +43,7 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task CreateAnAccount()
         {
-            await _Navigation.PushAsync(new UserRegistrationPage());
+            await _Navigation.PushModalAsync(new UserRegistrationPage());
         }
     }
 }

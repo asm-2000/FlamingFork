@@ -73,10 +73,24 @@
         </Border>
         <Label Text="{Binding PasswordError}" TextColor="{StaticResource PrimaryDark}" />
         <Button
-            Margin="0,20"
+            Margin="0,10"
             Command="{Binding ValidateFormCommand}"
             FontAttributes="Bold"
             FontSize="20"
             Text="Log In" />
+        <HorizontalStackLayout>
+            <Label
+                Text="Do not have an account?"
+                TextColor="{AppThemeBinding Light={StaticResource Black},
+                                            Dark={StaticResource PrimaryDarkText}}"
+                VerticalTextAlignment="Center" />
+            <Button
+                Background="{StaticResource Transparent}"
+                Command="{Binding CreateAnAccountCommand}"
+                FontAttributes="Bold"
+                Text="Create An Account"
+                TextColor="{StaticResource MidnightBlue}"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
