@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui;
+using FlamingFork.Pages;
+using FlamingFork.ViewModels;
 using Microsoft.Extensions.Logging;
 #if ANDROID
 using Android.Content.Res;
@@ -43,6 +45,13 @@ namespace FlamingFork
                 handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif
             });
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainViewModel>();
+
+            builder.Services.AddTransient<UserLoginPage>();
+            builder.Services.AddTransient<UserLoginViewModel>();
+            builder.Services.AddTransient<UserRegistrationPage>();
+            builder.Services.AddTransient<UserRegistrationViewModel>();
 
             return builder.Build();
         }

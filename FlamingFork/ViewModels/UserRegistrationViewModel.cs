@@ -37,9 +37,24 @@ namespace FlamingFork.ViewModels
         }
 
         [RelayCommand]
+        public void ValidateEmail()
+        {
+        }
+
+        [RelayCommand]
+        public void ValidatePassword()
+        {
+        }
+
+        [RelayCommand]
+        public void ValidateContactNumber()
+        {
+        }
+
+        [RelayCommand]
         public async Task RegisterAccount()
         {
-            await _Navigation.PopAsync();
+            await _Navigation.PopModalAsync();
         }
     }
 }
