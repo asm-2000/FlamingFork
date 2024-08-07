@@ -6,21 +6,28 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     x:DataType="viewmodel:UserLoginViewModel">
-    <VerticalStackLayout Padding="30,40">
-        <Label
-            Margin="0,0,0,20"
-            FontAttributes="Bold"
-            FontSize="35"
-            HorizontalTextAlignment="Center"
-            Text="Sign In !"
-            TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                        Dark={StaticResource PrimaryDark}}" />
+    <VerticalStackLayout Padding="30,60,30,0">
+        <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" StrokeThickness="3">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="40,0,0,40" />
+            </Border.StrokeShape>
+            <Label
+                Margin="0,20"
+                FontAttributes="Bold"
+                FontSize="45"
+                HorizontalTextAlignment="Center"
+                Text="Sign In !"
+                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                            Dark={StaticResource PrimaryDarkText}}" />
+        </Border>
+
         <Image
-            HeightRequest="55"
-            Source="form.png"
-            WidthRequest="55" />
+            Margin="0,30"
+            HeightRequest="70"
+            Source="sign_in.png"
+            WidthRequest="70" />
         <Label
-            Margin="0,50,0,5"
+            Margin="0,20,0,5"
             FontAttributes="Bold"
             FontSize="16"
             Text="Email:" />
@@ -43,7 +50,7 @@
         </Border>
         <Label Text="{Binding EmailError}" TextColor="{StaticResource PrimaryDark}" />
         <Label
-            Margin="0,50,0,5"
+            Margin="0,5"
             FontAttributes="Bold"
             FontSize="16"
             Text="Password:" />
@@ -66,7 +73,7 @@
         </Border>
         <Label Text="{Binding PasswordError}" TextColor="{StaticResource PrimaryDark}" />
         <Button
-            Margin="0,10,0,0"
+            Margin="0,20"
             Command="{Binding ValidateFormCommand}"
             FontAttributes="Bold"
             FontSize="20"
