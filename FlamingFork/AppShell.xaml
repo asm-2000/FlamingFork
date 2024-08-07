@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FlamingFork"
-    Shell.FlyoutBehavior="Disabled"
-    Title="FlamingFork">
+    Title="FlamingFork"
+    Shell.FlyoutBehavior="Flyout">
 
     <ShellContent
         Title="Home"
