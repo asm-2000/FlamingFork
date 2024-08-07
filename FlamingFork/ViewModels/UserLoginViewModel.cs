@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FlamingFork.Pages;
 
 namespace FlamingFork.ViewModels
 {
@@ -37,6 +38,12 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public void ValidateForm()
         {
+        }
+
+        [RelayCommand]
+        public async Task CreateAnAccount()
+        {
+            await _Navigation.PushAsync(new UserRegistrationPage());
         }
     }
 }
