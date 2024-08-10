@@ -24,6 +24,9 @@ namespace FlamingFork.ViewModels
         private string? _ContactNumber;
 
         [ObservableProperty]
+        private string? _FullNameError;
+
+        [ObservableProperty]
         private string? _EmailError;
 
         [ObservableProperty]
@@ -32,16 +35,27 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string? _ContactNumberError;
 
-        #endregion Properties
+        [ObservableProperty]
+        private string? _AddressError;
 
+        private bool _FormValidity;
         private INavigation _Navigation;
+
+        #endregion Properties
 
         public UserRegistrationViewModel(INavigation navigation)
         {
             _Navigation = navigation;
+            _FormValidity = false;
         }
 
         #region Validation Methods
+
+        [RelayCommand]
+        public void ValidateName()
+        {
+            FullNameError = Validation.NameValidator(FullName);
+        }
 
         [RelayCommand]
         public void ValidateEmail()
@@ -61,12 +75,25 @@ namespace FlamingFork.ViewModels
             ContactNumberError = Validation.ContactNumberValidator(ContactNumber);
         }
 
+        [RelayCommand]
+        public void ValidateAddress()
+        {
+            AddressError = Validation.AddressValidator(Address);
+        }
+
         #endregion Validation Methods
 
         [RelayCommand]
         public async Task RegisterAccount()
         {
-            if (string.IsNullOrEmpty(EmailError) && string.IsNullOrEmpty(PasswordError))
+            FullNameError = Validation.NameValidator(FullName);
+            EmailError = Validation.EmailValidator(Email);
+            PasswordError = Validation.PasswordValidator(Password);
+            AddressError = Validation.AddressValidator(Address);
+            ContactNumberError = Validation.ContactNumberValidator(ContactNumber);
+
+            _FormValidity = string.IsNullOrEmpty(EmailError) && string.IsNullOrEmpty(PasswordError) && string.IsNullOrEmpty(FullNameError) && string.IsNullOrEmpty(ContactNumberError) && string.IsNullOrEmpty(AddressError);
+            if (_FormValidity)
             {
                 await _Navigation.PopModalAsync();
             }

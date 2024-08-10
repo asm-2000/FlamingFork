@@ -5,8 +5,9 @@ namespace FlamingFork.Helper.Utilities
     public static class Validation
     {
         #region EmailValidator
+
         // Summary:
-        // Checks email for null values, matches the regex pattern and returns proper 
+        // Checks email for null values, matches the regex pattern and returns proper
         // error message.
         public static string EmailValidator(string email)
         {
@@ -28,10 +29,13 @@ namespace FlamingFork.Helper.Utilities
 
             return emailError;
         }
-        #endregion
+
+        #endregion EmailValidator
+
         #region PasswordValidator
+
         // Summary:
-        // Checks password for null values, matches the regex pattern and returns proper 
+        // Checks password for null values, matches the regex pattern and returns proper
         // error message.
         public static string PasswordValidator(string password)
         {
@@ -53,10 +57,13 @@ namespace FlamingFork.Helper.Utilities
 
             return passwordError;
         }
-        #endregion
+
+        #endregion PasswordValidator
+
         #region ContactNumberValidator
+
         // Summary:
-        // Checks contact number for null values, matches the regex pattern and returns proper 
+        // Checks contact number for null values, matches the regex pattern and returns proper
         // error message.
         public static string ContactNumberValidator(string contactNumber)
         {
@@ -78,6 +85,63 @@ namespace FlamingFork.Helper.Utilities
 
             return contactNumberError;
         }
-        #endregion
+
+        #endregion ContactNumberValidator
+
+        #region FullNameValidator
+
+        // Summary:
+        // Checks name for null values, matches the regex pattern and returns proper
+        // error message.
+        public static string NameValidator(string name)
+        {
+            string nameError;
+            var namePattern = @"^[A-Za-z]+ [A-Za-z]+$";
+            Regex regex = new(namePattern);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                nameError = "Name field cannot be empty!";
+            }
+            else if (!regex.IsMatch(name))
+            {
+                nameError = "Please enter a valid name";
+            }
+            else
+            {
+                nameError = string.Empty;
+            }
+
+            return nameError;
+        }
+
+        #endregion FullNameValidator
+
+        #region AddressValidator
+
+        // Summary:
+        // Checks name for null values, matches the regex pattern and returns proper
+        // error message.
+        public static string AddressValidator(string address)
+        {
+            string addressError;
+            var addressPattern = @"^(Kathmandu|Lalitpur),\s*\d+,\s*[A-Za-z\s]+$";
+            Regex regex = new(addressPattern);
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                addressError = "Address field cannot be empty!";
+            }
+            else if (!regex.IsMatch(address))
+            {
+                addressError = "Please mention city (Kathmandu/Lalitpur), ward and street separated by commas";
+            }
+            else
+            {
+                addressError = string.Empty;
+            }
+
+            return addressError;
+        }
+
+        #endregion AddressValidator
     }
 }
