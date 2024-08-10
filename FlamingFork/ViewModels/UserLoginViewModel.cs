@@ -21,6 +21,8 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _PasswordError;
 
+        private bool _FormValidity;
+
         private INavigation _Navigation;
 
         #endregion Properties
@@ -28,6 +30,9 @@ namespace FlamingFork.ViewModels
         public UserLoginViewModel(INavigation navigation)
         {
             _Navigation = navigation;
+            _FormValidity = false;
+            _EmailError = "";
+            _PasswordError = "";
         }
 
         #region Validation Methods
@@ -47,7 +52,8 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task ValidateForm()
         {
-            if (string.IsNullOrEmpty(EmailError) && string.IsNullOrEmpty(PasswordError))
+            _FormValidity = string.IsNullOrEmpty(EmailError = Validation.EmailValidator(Email)) && string.IsNullOrEmpty(PasswordError = Validation.PasswordValidator(Password));
+            if (_FormValidity)
             {
                 await _Navigation.PopModalAsync();
             }
