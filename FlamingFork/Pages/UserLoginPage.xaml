@@ -20,12 +20,12 @@
                 TextColor="{AppThemeBinding Light={StaticResource Primary},
                                             Dark={StaticResource PrimaryDarkText}}" />
         </Border>
-
         <Image
             Margin="0,30"
             HeightRequest="70"
             Source="sign_in.png"
             WidthRequest="70" />
+        <!--#region Input Fields-->
         <Label
             Margin="0,20,0,5"
             FontAttributes="Bold"
@@ -72,6 +72,7 @@
             </Entry>
         </Border>
         <Label Text="{Binding PasswordError}" TextColor="{StaticResource PrimaryDark}" />
+        <!--#endregion-->
         <Button
             Margin="0,10"
             Command="{Binding ValidateFormCommand}"
@@ -89,7 +90,7 @@
                 Command="{Binding CreateAnAccountCommand}"
                 FontAttributes="Bold"
                 Text="Create An Account"
-                TextColor="{StaticResource MidnightBlue}"
+                TextColor="{StaticResource LinkBlue}"
                 VerticalOptions="Center" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
