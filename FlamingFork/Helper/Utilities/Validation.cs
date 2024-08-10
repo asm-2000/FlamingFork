@@ -104,7 +104,7 @@ namespace FlamingFork.Helper.Utilities
             }
             else if (!regex.IsMatch(name))
             {
-                nameError = "Please enter a valid name";
+                nameError = "Please enter a valid full name";
             }
             else
             {
@@ -119,7 +119,7 @@ namespace FlamingFork.Helper.Utilities
         #region AddressValidator
 
         // Summary:
-        // Checks name for null values, matches the regex pattern and returns proper
+        // Checks address for null values, matches the regex pattern and returns proper
         // error message.
         public static string AddressValidator(string address)
         {

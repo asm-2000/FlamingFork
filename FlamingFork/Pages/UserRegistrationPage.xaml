@@ -44,10 +44,15 @@
                     FontSize="15"
                     HeightRequest="50"
                     Placeholder="Enter Your Full Name"
-                    Text="{Binding FullName}" />
+                    Text="{Binding FullName}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateNameCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
             </Border>
+            <Label Text="{Binding FullNameError}" TextColor="{StaticResource PrimaryDark}" />
             <Label
-                Margin="0,20,0,5"
+                Margin="0,5"
                 FontAttributes="Bold"
                 FontSize="16"
                 Text="Email:" />
@@ -108,10 +113,15 @@
                     FontSize="15"
                     HeightRequest="50"
                     Placeholder="Enter Delivery Address"
-                    Text="{Binding Address}" />
+                    Text="{Binding Address}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateAddressCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
             </Border>
+            <Label Text="{Binding AddressError}" TextColor="{StaticResource PrimaryDark}" />
             <Label
-                Margin="0,20,0,5"
+                Margin="0,5"
                 FontAttributes="Bold"
                 FontSize="16"
                 Text="Contact Number:" />
