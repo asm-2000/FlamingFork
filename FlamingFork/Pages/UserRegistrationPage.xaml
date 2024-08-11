@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FlamingFork.Pages.UserRegistrationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
+    Title="UserRegistrationPage"
+    x:DataType="viewmodel:UserRegistrationViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="30,60,30,0">
+            <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" StrokeThickness="3">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="40,0,0,40" />
+                </Border.StrokeShape>
+                <Label
+                    Margin="0,20"
+                    FontAttributes="Bold"
+                    FontSize="30"
+                    HorizontalTextAlignment="Center"
+                    Text="Register Account"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource PrimaryDarkText}}" />
+            </Border>
+            <Image
+                Margin="0,30"
+                HeightRequest="70"
+                Source="sign_up.png"
+                WidthRequest="70" />
+            <!--#region Input Fields-->
+            <Label
+                Margin="0,20,0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Full Name:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="FullName"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Placeholder="Enter Your Full Name"
+                    Text="{Binding FullName}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateNameCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding FullNameError}" TextColor="{StaticResource PrimaryDark}" />
+            <Label
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Email:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="Email"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Placeholder="Enter Your Email"
+                    Text="{Binding Email}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateEmailCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding EmailError}" TextColor="{StaticResource PrimaryDark}" />
+            <Label
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Password:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="Password"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Placeholder="Enter Your Password"
+                    Text="{Binding Password}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidatePasswordCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding PasswordError}" TextColor="{StaticResource PrimaryDark}" />
+            <Label
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Address:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="DeliveryAddress"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Placeholder="Enter Delivery Address"
+                    Text="{Binding Address}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateAddressCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding AddressError}" TextColor="{StaticResource PrimaryDark}" />
+            <Label
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Contact Number:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="ContactNumber"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Keyboard="Telephone"
+                    Placeholder="Enter Your Contact Number"
+                    Text="{Binding ContactNumber}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateContactNumberCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding ContactNumberError}" TextColor="{StaticResource PrimaryDark}" />
+            <!--#endregion-->
+            <Button
+                Margin="0,10"
+                Command="{Binding RegisterAccountCommand}"
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="Register Account" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
