@@ -4,12 +4,71 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FlamingFork"
+    xmlns:page="clr-namespace:FlamingFork.Pages"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="FlamingFork"
+    FlyoutWidth="270"
     Shell.FlyoutBehavior="Flyout">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout Padding="20,20,20,10">
+            <Border
+                Margin="10"
+                Padding="20"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary},
+                                                  Dark={StaticResource Black}}"
+                Stroke="{AppThemeBinding Light={StaticResource PrimaryDark},
+                                         Dark={StaticResource PrimaryDark}}"
+                StrokeShape="RoundRectangle 80 0"
+                StrokeThickness="3">
+                <VerticalStackLayout>
+                    <Label
+                        Margin="0,10,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="cursive"
+                        FontSize="35"
+                        HorizontalTextAlignment="Center"
+                        Text="Flamin' Fork"
+                        TextColor="{StaticResource White}" />
+                    <Image
+                        Margin="0,40,0,10"
+                        HeightRequest="80"
+                        Source="sign_in.png"
+                        WidthRequest="80" />
+                </VerticalStackLayout>
+            </Border>
+            <BoxView
+                BackgroundColor="{StaticResource Gray400}"
+                HeightRequest="1"
+                WidthRequest="250" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+    <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            Title="Our Menu"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Icon="menu_icon.png"
+            Route="MainPage" />
+    </FlyoutItem>
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="0.3*,0.5*">
+                <Image
+                    Margin="5"
+                    HeightRequest="25"
+                    Source="{Binding FlyoutIcon}"
+                    WidthRequest="25" />
+                <Label
+                    Grid.Column="1"
+                    CharacterSpacing="0.2"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HeightRequest="60"
+                    HorizontalTextAlignment="Start"
+                    Text="{Binding Title}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                Dark={StaticResource Gray200}}"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
 </Shell>
