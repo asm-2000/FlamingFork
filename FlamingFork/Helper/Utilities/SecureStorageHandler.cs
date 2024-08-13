@@ -1,5 +1,4 @@
 ﻿using FlamingFork.Models;
-using System.Text;
 using System.Text.Json;
 
 namespace FlamingFork.Helper.Utilities
@@ -29,7 +28,14 @@ namespace FlamingFork.Helper.Utilities
             try
             {
                 string? token = await SecureStorage.GetAsync("Token");
-                return token;
+                if (string.IsNullOrEmpty(token))
+                {
+                    return "Not Found";
+                }
+                else
+                {
+                    return token;
+                }    
             }
             catch
             {

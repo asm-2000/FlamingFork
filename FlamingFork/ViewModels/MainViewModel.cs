@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using FlamingFork.Helper.Utilities;
 using FlamingFork.Pages;
+using System.Diagnostics;
 
 namespace FlamingFork.ViewModels
 {
@@ -9,7 +11,20 @@ namespace FlamingFork.ViewModels
         public MainViewModel(INavigation navigation)
         {
             _Navigation = navigation;
-            _Navigation.PushModalAsync(new UserLoginPage());
+            CheckLoginStatus();
+        }
+
+        // Checks if the user has previously logged in or not and navigates accordingly
+        public async void CheckLoginStatus()
+        {
+            string? token = await SecureStorageHandler.GetAuthenticationToken();
+            Action navigationAction = token == "Not Found" ? (() => { _Navigation.PushModalAsync(new UserLoginPage()); }) : (() => { FetchMenuData(); });
+            navigationAction();
+        }
+
+        public void FetchMenuData()
+        {
+            Debug.WriteLine("fetched");
         }
     }
 }
