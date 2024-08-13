@@ -3,6 +3,7 @@ using FlamingFork.Repositories.Interfaces;
 using System.Text.Json;
 using System.Text;
 using FlamingFork.Helper.Utilities;
+using System.Diagnostics;
 
 namespace FlamingFork.Repositories.ApiServices
 {
@@ -14,7 +15,7 @@ namespace FlamingFork.Repositories.ApiServices
         public AuthenticationServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "10.10.100.62";
+            _Address = "10.10.100.62:8080";
         }
 
         #region SignUp Handler API Service
@@ -58,7 +59,7 @@ namespace FlamingFork.Repositories.ApiServices
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
-            var jsonContent = JsonSerializer.Serialize(customerCredentials, options);
+            var jsonContent = JsonSerializer.Serialize<CustomerLoginModel>(customerCredentials, options);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
             // Commmnicates with API and returns received message.
             try
@@ -69,12 +70,13 @@ namespace FlamingFork.Repositories.ApiServices
                 // Tries to deserialize the response to LoginResponseModel in case of sucessful login.
                 if (response.IsSuccessStatusCode)
                 {
+                    Debug.WriteLine("ok");
                     string responseBody = await response.Content.ReadAsStringAsync();
                     loginResponse = JsonSerializer.Deserialize<LoginResponseModel>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     SecureStorageHandler.StoreAuthenticationToken(loginResponse);
                     return "Sign In successful!";
                 }
-                // Deserializes the response to ApiResponseMessageModel in case of error satatus.
+                // Deserializes the response to ApiResponseMessageModel in case of error status.
                 else
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
