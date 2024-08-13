@@ -49,6 +49,26 @@
             Icon="menu_icon.png"
             Route="MainPage" />
     </FlyoutItem>
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="20,10" WidthRequest="200">
+            <Border Padding="10" StrokeShape="RoundRectangle 10">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalTextAlignment="Center"
+                        Text="Log Out"
+                        TextColor="{StaticResource Gray500}"
+                        VerticalTextAlignment="Center" />
+                    <ImageButton
+                        HeightRequest="40"
+                        Source="log_out.png"
+                        VerticalOptions="Center"
+                        WidthRequest="40" />
+                </HorizontalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid ColumnDefinitions="0.3*,0.5*">
