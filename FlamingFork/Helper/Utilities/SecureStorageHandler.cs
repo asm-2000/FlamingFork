@@ -7,7 +7,7 @@ namespace FlamingFork.Helper.Utilities
     {
         #region Token Storage Handler
 
-        public static async void StoreAuthenticationToken(LoginResponseModel loginResponse)
+        public static async Task StoreAuthenticationToken(LoginResponseModel loginResponse)
         {
             string? authToken = loginResponse.Token;
             CustomerModel? customer = loginResponse.CustomerDetails;
