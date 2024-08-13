@@ -1,8 +1,10 @@
-﻿namespace FlamingFork.Repositories.Interfaces
+﻿using FlamingFork.Models;
+
+namespace FlamingFork.Repositories.Interfaces
 {
     public interface IAuthenticationServiceRepository
     {
-        Task RegisterCustomer();
-        Task LoginCustomer();
+        Task<string> RegisterCustomer(CustomerModel customerDetails);
+        Task<string> LoginCustomer(CustomerLoginModel customerCredentials);
     }
 }
