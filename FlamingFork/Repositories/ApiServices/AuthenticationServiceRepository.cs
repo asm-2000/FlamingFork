@@ -15,7 +15,7 @@ namespace FlamingFork.Repositories.ApiServices
         public AuthenticationServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "10.10.100.62:8080";
+            _Address = "192.168.10.72:8080";
         }
 
         #region SignUp Handler API Service
@@ -73,7 +73,7 @@ namespace FlamingFork.Repositories.ApiServices
                     Debug.WriteLine("ok");
                     string responseBody = await response.Content.ReadAsStringAsync();
                     loginResponse = JsonSerializer.Deserialize<LoginResponseModel>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    SecureStorageHandler.StoreAuthenticationToken(loginResponse);
+                    await SecureStorageHandler.StoreAuthenticationToken(loginResponse);
                     return "Sign In successful!";
                 }
                 // Deserializes the response to ApiResponseMessageModel in case of error status.
