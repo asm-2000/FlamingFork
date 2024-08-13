@@ -54,22 +54,30 @@
         <VerticalStackLayout
             Padding="20,10"
             x:DataType="viewmodel:AppShellViewModel"
-            WidthRequest="200">
-            <Border Padding="10" StrokeShape="RoundRectangle 10">
+            Spacing="20"
+            WidthRequest="250">
+            <BoxView
+                BackgroundColor="{StaticResource Gray400}"
+                HeightRequest="1"
+                WidthRequest="250" />
+            <Border
+                Padding="5"
+                StrokeShape="RoundRectangle 10"
+                WidthRequest="150">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
                     <Label
                         FontAttributes="Bold"
-                        FontSize="18"
+                        FontSize="16"
                         HorizontalTextAlignment="Center"
                         Text="Log Out"
                         TextColor="{StaticResource Gray500}"
                         VerticalTextAlignment="Center" />
                     <ImageButton
                         Command="{Binding LogOutCommand}"
-                        HeightRequest="40"
+                        HeightRequest="30"
                         Source="log_out.png"
                         VerticalOptions="Center"
-                        WidthRequest="40" />
+                        WidthRequest="30" />
                 </HorizontalStackLayout>
             </Border>
         </VerticalStackLayout>
