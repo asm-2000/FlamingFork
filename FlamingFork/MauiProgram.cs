@@ -47,7 +47,6 @@ namespace FlamingFork
             });
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<MainViewModel>();
-
             builder.Services.AddTransient<UserLoginPage>();
             builder.Services.AddTransient<UserLoginViewModel>();
             builder.Services.AddTransient<UserRegistrationPage>();

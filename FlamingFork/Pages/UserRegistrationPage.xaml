@@ -89,6 +89,7 @@
                     x:Name="Password"
                     FontSize="15"
                     HeightRequest="50"
+                    IsPassword="True"
                     Placeholder="Enter Your Password"
                     Text="{Binding Password}">
                     <Entry.Behaviors>
@@ -151,6 +152,20 @@
                 FontAttributes="Bold"
                 FontSize="20"
                 Text="Register Account" />
+            <ActivityIndicator
+                BackgroundColor="{StaticResource Transparent}"
+                HeightRequest="20"
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsRegistering}"
+                IsVisible="{Binding IsRegistering}"
+                WidthRequest="20"
+                Color="{AppThemeBinding Light={StaticResource Gray400},
+                                        Dark={StaticResource Gray200}}" />
+            <Label
+                FontSize="16"
+                HorizontalOptions="Center"
+                Text="{Binding RegistrationMessage}"
+                TextColor="{StaticResource Primary}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

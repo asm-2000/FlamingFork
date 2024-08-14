@@ -6,6 +6,9 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     x:DataType="viewmodel:UserLoginViewModel">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
     <VerticalStackLayout Padding="30,60,30,0">
         <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" StrokeThickness="3">
             <Border.StrokeShape>
