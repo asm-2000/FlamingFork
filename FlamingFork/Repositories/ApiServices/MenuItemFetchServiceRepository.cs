@@ -1,6 +1,8 @@
 ﻿using FlamingFork.Helper.Utilities;
 using FlamingFork.Models;
 using FlamingFork.Repositories.Interfaces;
+using System.Diagnostics;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace FlamingFork.Repositories.ApiServices
@@ -20,7 +22,7 @@ namespace FlamingFork.Repositories.ApiServices
 
         public async Task<List<CartItemModel>> GetMenuItems()
         {
-            List<MenuItemModel>? fetchedMenuItems = [];
+            AllMenuItemsModel fetchedMenuItems = new AllMenuItemsModel();
             List<CartItemModel>? menuItems = [];
             ApiResponseMessageModal? ErrorResponse = new();
             var options = new JsonSerializerOptions
@@ -30,6 +32,10 @@ namespace FlamingFork.Repositories.ApiServices
 
             try
             {
+                // Fetches authentication token from secure storage.
+                string token = await SecureStorageHandler.GetAuthenticationToken();
+                _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
                 var uri = new Uri("http://" + _Address + "/menu/allMenuItems");
                 var response = await _HttpClient.GetAsync(uri);
 
@@ -37,17 +43,18 @@ namespace FlamingFork.Repositories.ApiServices
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    fetchedMenuItems = JsonSerializer.Deserialize<List<MenuItemModel>>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    fetchedMenuItems = JsonSerializer.Deserialize<AllMenuItemsModel>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     // Fetch customerId from secure storage.
                     CustomerModel customerDetails = await SecureStorageHandler.GetCustomerDetails();
                     int customerId = Convert.ToInt16(customerDetails.CustomerID);
                     // Maps details from MenuItemModel to CartItemModel for simplifying add to cart
                     // functionality in Main Page
 
-                    foreach (MenuItemModel menuitem in fetchedMenuItems)
+                    foreach (MenuItemModel menuitem in fetchedMenuItems.AllMenuItems)
                     {
                         CartItemModel correspodingCartItem = new(customerId, menuitem.ItemName, menuitem.ItemPrice, 1);
                         menuItems.Add(correspodingCartItem);
+                        Debug.WriteLine(correspodingCartItem.CartItemName);
                     }
 
                     return menuItems;
