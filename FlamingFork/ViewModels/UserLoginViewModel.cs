@@ -24,6 +24,12 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _PasswordError;
 
+        [ObservableProperty]
+        private string _SignInMessage;
+
+        [ObservableProperty]
+        private bool _IsSigningIn;
+
         private bool _FormValidity;
 
         private INavigation _Navigation;
@@ -37,8 +43,10 @@ namespace FlamingFork.ViewModels
             _Navigation = navigation;
             _AuthService = new AuthenticationServiceRepository();
             _FormValidity = false;
+            _IsSigningIn = false;
             _EmailError = "";
             _PasswordError = "";
+            _SignInMessage = "";
         }
 
         #region Validation Methods
@@ -61,12 +69,12 @@ namespace FlamingFork.ViewModels
             _FormValidity = string.IsNullOrEmpty(EmailError = Validation.EmailValidator(Email)) && string.IsNullOrEmpty(PasswordError = Validation.PasswordValidator(Password));
             if (_FormValidity)
             {
+                IsSigningIn = true;
                 CustomerLoginModel customerCredentials = new CustomerLoginModel(Email,Password);
                 Debug.WriteLine(customerCredentials.Email);
-                string message = await _AuthService.LoginCustomer(customerCredentials);
+                SignInMessage = await _AuthService.LoginCustomer(customerCredentials);
                 string token = await SecureStorageHandler.GetAuthenticationToken();
-                Debug.WriteLine(message);
-                Debug.WriteLine(token);
+                IsSigningIn = false;
                 if (token != "Not Found")
                 {
                     await _Navigation.PopModalAsync();

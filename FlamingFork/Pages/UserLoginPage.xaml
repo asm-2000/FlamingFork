@@ -64,6 +64,7 @@
                 x:Name="Password"
                 FontSize="15"
                 HeightRequest="50"
+                IsPassword="True"
                 Placeholder="Enter Your Password"
                 Text="{Binding Password}">
                 <Entry.Behaviors>
@@ -93,5 +94,19 @@
                 TextColor="{StaticResource LinkBlue}"
                 VerticalOptions="Center" />
         </HorizontalStackLayout>
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsSigningIn}"
+            IsVisible="{Binding IsSigningIn}"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <Label
+            FontSize="16"
+            HorizontalOptions="Center"
+            Text="{Binding SignInMessage}"
+            TextColor="{StaticResource Primary}" />
     </VerticalStackLayout>
 </ContentPage>

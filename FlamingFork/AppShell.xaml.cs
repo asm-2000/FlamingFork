@@ -1,4 +1,5 @@
 ﻿using FlamingFork.Pages;
+using FlamingFork.ViewModels;
 
 namespace FlamingFork
 {
@@ -7,6 +8,8 @@ namespace FlamingFork
         public AppShell()
         {
             InitializeComponent();
+            BindingContext = new AppShellViewModel(Navigation);
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(UserLoginPage), typeof(UserLoginPage));
             Routing.RegisterRoute(nameof(UserRegistrationPage), typeof(UserRegistrationPage));
         }

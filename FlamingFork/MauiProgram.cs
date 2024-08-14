@@ -45,8 +45,8 @@ namespace FlamingFork
                 handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #endif
             });
-            builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainViewModel>();
 
             builder.Services.AddTransient<UserLoginPage>();
             builder.Services.AddTransient<UserLoginViewModel>();
