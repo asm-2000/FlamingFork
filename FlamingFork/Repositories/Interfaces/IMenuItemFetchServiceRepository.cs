@@ -4,6 +4,6 @@ namespace FlamingFork.Repositories.Interfaces
 {
     public interface IMenuItemFetchServiceRepository
     {
-        Task<List<CartItemModel>> GetMenuItems();
+        Task<List<MenuItemModel>> GetMenuItems();
     }
 }

@@ -8,5 +8,6 @@
         public string? ItemDescription { get; set; }
         public string? ItemCategory { get; set; }
         public string? ItemImageUrl { get; set; }
+        public int Quantity { get; set; } = 1;
     }
 }

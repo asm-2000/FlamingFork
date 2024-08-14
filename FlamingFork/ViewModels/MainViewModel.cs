@@ -9,13 +9,14 @@ namespace FlamingFork.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private List<CartItemModel> _MenuItems;
+        private List<MenuItemModel> _MenuItems;
 
         [ObservableProperty]
         private string _IsFetching;
 
         private INavigation _Navigation;
         private MenuItemFetchServiceRepository _MenuItemFetchService;
+        private int _CustomerId;
 
         public MainViewModel(INavigation navigation)
         {
@@ -30,7 +31,12 @@ namespace FlamingFork.ViewModels
         public async void CheckLoginStatus()
         {
             string? token = await SecureStorageHandler.GetAuthenticationToken();
-            Action navigationAction = token == "Not Found" ? (() => { _Navigation.PushAsync(new UserLoginPage()); }) : (() => {});
+            Action navigationAction = token == "Not Found" ? (() => { _Navigation.PushAsync(new UserLoginPage()); }) : (async () =>
+            {                   
+                // Fetch customerId from secure storage.
+                CustomerModel customerDetails = await SecureStorageHandler.GetCustomerDetails();
+                _CustomerId = Convert.ToInt16(customerDetails.CustomerID);
+            });
             navigationAction();
         }
 
@@ -43,7 +49,6 @@ namespace FlamingFork.ViewModels
                 MenuItems = await _MenuItemFetchService.GetMenuItems();
             }
             IsFetching = "False";
-
         }
     }
 }

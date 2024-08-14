@@ -14,16 +14,15 @@ namespace FlamingFork.Repositories.ApiServices
 
         public MenuItemFetchServiceRepository()
         {
-            _Address = "10.10.100.111:8080";
+            _Address = "192.168.10.72:8080";
             _HttpClient = new HttpClient();
         }
 
         #region Menu Items Fetcher
 
-        public async Task<List<CartItemModel>> GetMenuItems()
+        public async Task<List<MenuItemModel>> GetMenuItems()
         {
-            AllMenuItemsModel fetchedMenuItems = new AllMenuItemsModel();
-            List<CartItemModel>? menuItems = [];
+            AllMenuItemsModel? fetchedMenuItems = new AllMenuItemsModel();
             ApiResponseMessageModal? ErrorResponse = new();
             var options = new JsonSerializerOptions
             {
@@ -44,20 +43,8 @@ namespace FlamingFork.Repositories.ApiServices
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
                     fetchedMenuItems = JsonSerializer.Deserialize<AllMenuItemsModel>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    // Fetch customerId from secure storage.
-                    CustomerModel customerDetails = await SecureStorageHandler.GetCustomerDetails();
-                    int customerId = Convert.ToInt16(customerDetails.CustomerID);
-                    // Maps details from MenuItemModel to CartItemModel for simplifying add to cart
-                    // functionality in Main Page
 
-                    foreach (MenuItemModel menuitem in fetchedMenuItems.AllMenuItems)
-                    {
-                        CartItemModel correspodingCartItem = new(customerId, menuitem.ItemName, menuitem.ItemPrice, 1);
-                        menuItems.Add(correspodingCartItem);
-                        Debug.WriteLine(correspodingCartItem.CartItemName);
-                    }
-
-                    return menuItems;
+                    return fetchedMenuItems.AllMenuItems;
                 }
                 // Deserializes the response to ApiResponseMessageModel in case of error status.
                 else
