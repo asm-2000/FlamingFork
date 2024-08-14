@@ -3,6 +3,7 @@
     x:Class="FlamingFork.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:FlamingFork.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     Title="Explore Foods.."
@@ -32,20 +33,591 @@
     </Shell.TitleView>
     <!--#endregion-->
     <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="25">
-            <Label Text="Initialization" />
-            <Button Text="Demo button" />
-            <Border
-                BackgroundColor="{AppThemeBinding Light={StaticResource White},
-                                                  Dark={StaticResource DeepGray}}"
-                Stroke="{AppThemeBinding Light={StaticResource Gray300},
-                                         Dark={StaticResource Transparent}}"
-                StrokeShape="RoundRectangle 7">
-                <Entry
-                    Margin="5,0"
-                    HeightRequest="50"
-                    Placeholder="Enter Your Name" />
-            </Border>
+        <VerticalStackLayout>
+            <ActivityIndicator
+                BackgroundColor="{StaticResource Transparent}"
+                HeightRequest="25"
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsFetching}"
+                IsVisible="{Binding IsFetching}"
+                WidthRequest="25"
+                Color="{AppThemeBinding Light={StaticResource Gray400},
+                                        Dark={StaticResource Gray200}}" />
+            <VerticalStackLayout
+                Padding="20,20"
+                IsVisible="{Binding HasLoaded}"
+                Spacing="20">
+                <!--#region Category Title Momo-->
+                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                    <BoxView
+                        Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Momo"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gold}}" />
+                    <BoxView
+                        Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                </Grid>
+                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                    <ScrollView
+                        Padding="10,20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                          Dark={StaticResource Black}}"
+                        Orientation="Horizontal">
+                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding MomoItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:MenuItemModel">
+                                    <Border
+                                        Margin="5,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                          Dark={StaticResource OffBlack}}"
+                                        Stroke="{StaticResource Transparent}"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="142">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="142"
+                                                WidthRequest="142">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="">
+                                                        <Setter Property="Source" Value="default_image.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Source" Value="sign_in.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                                <Image.Source>
+                                                    <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                x:Name="ItemName"
+                                                Margin="10,5,10,0"
+                                                FontSize="12"
+                                                HeightRequest="30"
+                                                Text="{Binding ItemName}" />
+                                            <HorizontalStackLayout Margin="10,0">
+                                                <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                                                <ImageButton
+                                                    Margin="15,0,5,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="minus.png"
+                                                    WidthRequest="16" />
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="add.png"
+                                                    WidthRequest="15" />
+                                            </HorizontalStackLayout>
+                                            <Button
+                                                Margin="10,10"
+                                                FontSize="12"
+                                                HeightRequest="35"
+                                                Text="Add To Cart" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Border>
+                <!--#endregion-->
+                <!--#region Category Title Noodles-->
+                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                    <BoxView
+                        Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Noodles"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gold}}" />
+                    <BoxView
+                        Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                </Grid>
+                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                    <ScrollView
+                        Padding="10,20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                          Dark={StaticResource Black}}"
+                        Orientation="Horizontal">
+                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding NoodleItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:MenuItemModel">
+                                    <Border
+                                        Margin="5,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                          Dark={StaticResource OffBlack}}"
+                                        Stroke="{StaticResource Transparent}"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="142">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="142"
+                                                WidthRequest="142">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="">
+                                                        <Setter Property="Source" Value="default_image.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Source" Value="sign_in.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                                <Image.Source>
+                                                    <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                x:Name="ItemName"
+                                                Margin="10,5,10,0"
+                                                FontSize="12"
+                                                HeightRequest="30"
+                                                Text="{Binding ItemName}" />
+                                            <HorizontalStackLayout Margin="10,0">
+                                                <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                                                <ImageButton
+                                                    Margin="15,0,5,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="minus.png"
+                                                    WidthRequest="16" />
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="add.png"
+                                                    WidthRequest="15" />
+                                            </HorizontalStackLayout>
+                                            <Button
+                                                Margin="10,10"
+                                                FontSize="12"
+                                                HeightRequest="35"
+                                                Text="Add To Cart" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Border>
+                <!--#endregion-->
+                <!--#region Category Title Sandwiches-->
+                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                    <BoxView
+                        Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Burgers/Sandwiches"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gold}}" />
+                    <BoxView
+                        Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                </Grid>
+                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                    <ScrollView
+                        Padding="10,20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                          Dark={StaticResource Black}}"
+                        Orientation="Horizontal">
+                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding SandwichItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:MenuItemModel">
+                                    <Border
+                                        Margin="5,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                          Dark={StaticResource OffBlack}}"
+                                        Stroke="{StaticResource Transparent}"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="142">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="142"
+                                                WidthRequest="142">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="">
+                                                        <Setter Property="Source" Value="default_image.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Source" Value="sign_in.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                                <Image.Source>
+                                                    <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                x:Name="ItemName"
+                                                Margin="10,5,10,0"
+                                                FontSize="12"
+                                                HeightRequest="30"
+                                                Text="{Binding ItemName}" />
+                                            <HorizontalStackLayout Margin="10,0">
+                                                <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                                                <ImageButton
+                                                    Margin="15,0,5,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="minus.png"
+                                                    WidthRequest="16" />
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="add.png"
+                                                    WidthRequest="15" />
+                                            </HorizontalStackLayout>
+                                            <Button
+                                                Margin="10,10"
+                                                FontSize="12"
+                                                HeightRequest="35"
+                                                Text="Add To Cart" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Border>
+                <!--#endregion-->
+                <!--#region Category Title Snacks-->
+                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                    <BoxView
+                        Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Snacks"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gold}}" />
+                    <BoxView
+                        Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                </Grid>
+                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                    <ScrollView
+                        Padding="10,20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                          Dark={StaticResource Black}}"
+                        Orientation="Horizontal">
+                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding SnackItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:MenuItemModel">
+                                    <Border
+                                        Margin="5,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                          Dark={StaticResource OffBlack}}"
+                                        Stroke="{StaticResource Transparent}"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="142">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="142"
+                                                WidthRequest="142">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="">
+                                                        <Setter Property="Source" Value="default_image.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Source" Value="sign_in.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                                <Image.Source>
+                                                    <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                x:Name="ItemName"
+                                                Margin="10,5,10,0"
+                                                FontSize="12"
+                                                HeightRequest="30"
+                                                Text="{Binding ItemName}" />
+                                            <HorizontalStackLayout Margin="10,0">
+                                                <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                                                <ImageButton
+                                                    Margin="15,0,5,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="minus.png"
+                                                    WidthRequest="16" />
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="add.png"
+                                                    WidthRequest="15" />
+                                            </HorizontalStackLayout>
+                                            <Button
+                                                Margin="10,10"
+                                                FontSize="12"
+                                                HeightRequest="35"
+                                                Text="Add To Cart" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Border>
+                <!--#endregion-->
+                <!--#region Category Title BreakFast-->
+                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                    <BoxView
+                        Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Breakfast"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gold}}" />
+                    <BoxView
+                        Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                </Grid>
+                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                    <ScrollView
+                        Padding="10,20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                          Dark={StaticResource Black}}"
+                        Orientation="Horizontal">
+                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding BreakfastItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:MenuItemModel">
+                                    <Border
+                                        Margin="5,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                          Dark={StaticResource OffBlack}}"
+                                        Stroke="{StaticResource Transparent}"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="142">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="142"
+                                                WidthRequest="142">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="">
+                                                        <Setter Property="Source" Value="default_image.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Source" Value="sign_in.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                                <Image.Source>
+                                                    <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                x:Name="ItemName"
+                                                Margin="10,5,10,0"
+                                                FontSize="12"
+                                                HeightRequest="30"
+                                                Text="{Binding ItemName}" />
+                                            <HorizontalStackLayout Margin="10,0">
+                                                <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                                                <ImageButton
+                                                    Margin="15,0,5,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="minus.png"
+                                                    WidthRequest="16" />
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="add.png"
+                                                    WidthRequest="15" />
+                                            </HorizontalStackLayout>
+                                            <Button
+                                                Margin="10,10"
+                                                FontSize="12"
+                                                HeightRequest="35"
+                                                Text="Add To Cart" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Border>
+                <!--#endregion-->
+                <!--#region Category Title Drinks-->
+                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                    <BoxView
+                        Grid.Column="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Soft Drinks"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gold}}" />
+                    <BoxView
+                        Grid.Column="2"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                          Dark={StaticResource Primary}}"
+                        HeightRequest="2" />
+                </Grid>
+                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                    <ScrollView
+                        Padding="10,20"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                          Dark={StaticResource Black}}"
+                        Orientation="Horizontal">
+                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding DrinkItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="model:MenuItemModel">
+                                    <Border
+                                        Margin="5,0"
+                                        BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                                          Dark={StaticResource OffBlack}}"
+                                        Stroke="{StaticResource Transparent}"
+                                        StrokeShape="RoundRectangle 10"
+                                        WidthRequest="142">
+                                        <VerticalStackLayout Spacing="2">
+                                            <Image
+                                                Aspect="AspectFill"
+                                                HeightRequest="142"
+                                                WidthRequest="142">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="">
+                                                        <Setter Property="Source" Value="default_image.png" />
+                                                    </DataTrigger>
+                                                    <DataTrigger
+                                                        Binding="{Binding ItemImageUrl}"
+                                                        TargetType="Image"
+                                                        Value="{x:Null}">
+                                                        <Setter Property="Source" Value="sign_in.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                                <Image.Source>
+                                                    <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                                                </Image.Source>
+                                            </Image>
+                                            <Label
+                                                x:Name="ItemName"
+                                                Margin="10,5,10,0"
+                                                FontSize="12"
+                                                HeightRequest="30"
+                                                Text="{Binding ItemName}" />
+                                            <HorizontalStackLayout Margin="10,0">
+                                                <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                                                <ImageButton
+                                                    Margin="15,0,5,0"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="minus.png"
+                                                    WidthRequest="16" />
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                                                    HeightRequest="15"
+                                                    Source="add.png"
+                                                    WidthRequest="15" />
+                                            </HorizontalStackLayout>
+                                            <Button
+                                                Margin="10,10"
+                                                FontSize="12"
+                                                HeightRequest="35"
+                                                Text="Add To Cart" />
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </ScrollView>
+                </Border>
+                <!--#endregion-->
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
