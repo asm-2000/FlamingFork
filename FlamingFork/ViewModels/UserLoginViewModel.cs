@@ -77,7 +77,7 @@ namespace FlamingFork.ViewModels
                 IsSigningIn = false;
                 if (token != "Not Found")
                 {
-                    await _Navigation.PopModalAsync();
+                    await _Navigation.PopAsync();
                 }     
             }
         }
@@ -87,7 +87,7 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task CreateAnAccount()
         {
-            await _Navigation.PushModalAsync(new UserRegistrationPage());
+            await Shell.Current.Navigation.PushModalAsync(new UserRegistrationPage());
         }
     }
 }

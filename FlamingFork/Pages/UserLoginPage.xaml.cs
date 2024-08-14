@@ -11,6 +11,6 @@ public partial class UserLoginPage : ContentPage
 	}
 	protected override bool OnBackButtonPressed()
 	{
-		return false;
+		return true;
 	}
 }

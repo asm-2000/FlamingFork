@@ -18,7 +18,7 @@ namespace FlamingFork.ViewModels
         public async void CheckLoginStatus()
         {
             string? token = await SecureStorageHandler.GetAuthenticationToken();
-            Action navigationAction = token == "Not Found" ? (() => { _Navigation.PushModalAsync(new UserLoginPage()); }) : (() => { FetchMenuData(); });
+            Action navigationAction = token == "Not Found" ? (() => { _Navigation.PushAsync(new UserLoginPage()); }) : (() => { FetchMenuData(); });
             navigationAction();
         }
 
