@@ -1,15 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using FlamingFork.Helper.Utilities;
+using FlamingFork.Models;
 using FlamingFork.Pages;
-using System.Diagnostics;
+using FlamingFork.Repositories.ApiServices;
 
 namespace FlamingFork.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private List<CartItemModel> _MenuItems;
+
         private INavigation _Navigation;
+        private MenuItemFetchServiceRepository _MenuItemFetchService;
+
         public MainViewModel(INavigation navigation)
         {
+            _MenuItems = [];
+            _MenuItemFetchService = new MenuItemFetchServiceRepository();
             _Navigation = navigation;
             CheckLoginStatus();
         }
@@ -22,9 +30,9 @@ namespace FlamingFork.ViewModels
             navigationAction();
         }
 
-        public void FetchMenuData()
+        public async void FetchMenuData()
         {
-            Debug.WriteLine("fetched");
+            MenuItems = await _MenuItemFetchService.GetMenuItems();
         }
     }
 }
