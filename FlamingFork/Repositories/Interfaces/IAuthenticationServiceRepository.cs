@@ -6,6 +6,5 @@ namespace FlamingFork.Repositories.Interfaces
     {
         Task<string> RegisterCustomer(CustomerModel customerDetails);
         Task<string> LoginCustomer(CustomerLoginModel customerCredentials);
-        Task<List<CartItemModel>> GetMenuItems();
     }
 }
