@@ -46,7 +46,7 @@
             <VerticalStackLayout
                 Padding="20,20"
                 IsVisible="{Binding HasLoaded}"
-                Spacing="20">
+                Spacing="5">
                 <!--#region Category Title Momo-->
                 <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
                     <BoxView
@@ -87,7 +87,7 @@
                                         <VerticalStackLayout Spacing="2">
                                             <Image
                                                 Aspect="AspectFill"
-                                                HeightRequest="142"
+                                                HeightRequest="120"
                                                 WidthRequest="142">
                                                 <Image.Triggers>
                                                     <DataTrigger
@@ -129,6 +129,13 @@
                                                     Source="add.png"
                                                     WidthRequest="15" />
                                             </HorizontalStackLayout>
+                                            <Label
+                                                Margin="10,0"
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                            Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
                                                 FontSize="12"
@@ -182,7 +189,7 @@
                                         <VerticalStackLayout Spacing="2">
                                             <Image
                                                 Aspect="AspectFill"
-                                                HeightRequest="142"
+                                                HeightRequest="120"
                                                 WidthRequest="142">
                                                 <Image.Triggers>
                                                     <DataTrigger
@@ -224,6 +231,13 @@
                                                     Source="add.png"
                                                     WidthRequest="15" />
                                             </HorizontalStackLayout>
+                                            <Label
+                                                Margin="10,0"
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                            Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
                                                 FontSize="12"
@@ -277,7 +291,7 @@
                                         <VerticalStackLayout Spacing="2">
                                             <Image
                                                 Aspect="AspectFill"
-                                                HeightRequest="142"
+                                                HeightRequest="120"
                                                 WidthRequest="142">
                                                 <Image.Triggers>
                                                     <DataTrigger
@@ -319,6 +333,13 @@
                                                     Source="add.png"
                                                     WidthRequest="15" />
                                             </HorizontalStackLayout>
+                                            <Label
+                                                Margin="10,0"
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                            Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
                                                 FontSize="12"
@@ -372,7 +393,7 @@
                                         <VerticalStackLayout Spacing="2">
                                             <Image
                                                 Aspect="AspectFill"
-                                                HeightRequest="142"
+                                                HeightRequest="120"
                                                 WidthRequest="142">
                                                 <Image.Triggers>
                                                     <DataTrigger
@@ -414,6 +435,13 @@
                                                     Source="add.png"
                                                     WidthRequest="15" />
                                             </HorizontalStackLayout>
+                                            <Label
+                                                Margin="10,0"
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                            Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
                                                 FontSize="12"
@@ -467,7 +495,7 @@
                                         <VerticalStackLayout Spacing="2">
                                             <Image
                                                 Aspect="AspectFill"
-                                                HeightRequest="142"
+                                                HeightRequest="120"
                                                 WidthRequest="142">
                                                 <Image.Triggers>
                                                     <DataTrigger
@@ -509,6 +537,13 @@
                                                     Source="add.png"
                                                     WidthRequest="15" />
                                             </HorizontalStackLayout>
+                                            <Label
+                                                Margin="10,0"
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                            Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
                                                 FontSize="12"
@@ -562,7 +597,7 @@
                                         <VerticalStackLayout Spacing="2">
                                             <Image
                                                 Aspect="AspectFill"
-                                                HeightRequest="142"
+                                                HeightRequest="120"
                                                 WidthRequest="142">
                                                 <Image.Triggers>
                                                     <DataTrigger
@@ -604,6 +639,13 @@
                                                     Source="add.png"
                                                     WidthRequest="15" />
                                             </HorizontalStackLayout>
+                                            <Label
+                                                Margin="10,0"
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                            Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
                                                 FontSize="12"
