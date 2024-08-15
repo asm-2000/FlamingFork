@@ -14,7 +14,7 @@ namespace FlamingFork.Repositories.ApiServices
 
         public MenuItemFetchServiceRepository()
         {
-            _Address = "192.168.10.72:8080";
+            _Address = "10.10.100.165:8080";
             _HttpClient = new HttpClient();
         }
 
