@@ -39,8 +39,12 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _HasLoaded;
 
+        [ObservableProperty]
+        private string _CartMessage;
+
         private INavigation _Navigation;
         private MenuItemFetchServiceRepository _MenuItemFetchService;
+        private CartServiceRepository _CartService;
         private int _CustomerId;
 
         #endregion Properties
@@ -56,7 +60,9 @@ namespace FlamingFork.ViewModels
             _DrinkItems = [];
             _BreakfastItems = [];
             _SnackItems = [];
+            _CartMessage = "";
             _MenuItemFetchService = new MenuItemFetchServiceRepository();
+            _CartService = new CartServiceRepository();
             _Navigation = navigation;
             CheckLoginStatus();
             FetchMenuData();
@@ -164,10 +170,13 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task AddMenuItemsToCart(string name)
         {
-           CustomerModel customer = await SecureStorageHandler.GetCustomerDetails();
-           int customerId = Convert.ToInt16(customer.CustomerID);
-           MenuItemModel? currentMenuItem = MenuItems.Find(item => item.ItemName == name);
-           CartItemModel correspondingCartItem = new(customerId,currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity);
+            CustomerModel customer = await SecureStorageHandler.GetCustomerDetails();
+            int customerId = Convert.ToInt16(customer.CustomerID);
+            MenuItemModel? currentMenuItem = MenuItems.Find(item => item.ItemName == name);
+            CartItemModel correspondingCartItem = new(customerId, currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity);
+            CartMessage = await _CartService.AddItemToCart(correspondingCartItem);
+            await Task.Delay(1000);
+            CartMessage = "";
         }
 
         public void ClearLists()
