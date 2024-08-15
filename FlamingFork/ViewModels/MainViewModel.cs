@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FlamingFork.Helper.Utilities;
 using FlamingFork.Models;
 using FlamingFork.Pages;
 using FlamingFork.Repositories.ApiServices;
+using System.Diagnostics;
 
 namespace FlamingFork.ViewModels
 {
@@ -37,8 +39,15 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _HasLoaded;
 
+        [ObservableProperty]
+        private string _CartMessage;
+
+        [ObservableProperty]
+        private string _CartMessageVisibility;
+
         private INavigation _Navigation;
         private MenuItemFetchServiceRepository _MenuItemFetchService;
+        private CartServiceRepository _CartService;
         private int _CustomerId;
 
         #endregion Properties
@@ -54,13 +63,18 @@ namespace FlamingFork.ViewModels
             _DrinkItems = [];
             _BreakfastItems = [];
             _SnackItems = [];
+            _CartMessage = "";
+            _CartMessageVisibility = "False";
             _MenuItemFetchService = new MenuItemFetchServiceRepository();
+            _CartService = new CartServiceRepository();
             _Navigation = navigation;
             CheckLoginStatus();
             FetchMenuData();
         }
 
         #endregion Constructor
+
+        #region Methods
 
         // Checks if the user has previously logged in or not and navigates accordingly
         public async void CheckLoginStatus()
@@ -119,5 +133,68 @@ namespace FlamingFork.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        public void IncreaseQuantity(string itemName)
+        {
+            foreach (MenuItemModel menuItem in MenuItems)
+            {
+                if (menuItem.ItemName == itemName)
+                {
+                    // Only increase the quantity if its value does not exceed 5.
+                    if (menuItem.Quantity <= 4)
+                    {
+                        int quantity = menuItem.Quantity + 1;
+                        menuItem.Quantity = quantity;
+                    }
+                }
+            }
+            ClearLists();
+            SegregateMenuItems();
+        }
+
+        [RelayCommand]
+        public void DecreaseQuantity(string itemName)
+        {
+            foreach (MenuItemModel menuItem in MenuItems)
+            {
+                if (menuItem.ItemName == itemName)
+                {
+                    // Only decrease quantity if its previous quantity is greater than 1.
+                    if (menuItem.Quantity > 1)
+                    {
+                        menuItem.Quantity -= 1;
+                    }
+                }
+            }
+            ClearLists();
+            SegregateMenuItems();
+        }
+
+        [RelayCommand]
+        public async Task AddMenuItemToCart(string name)
+        {
+            CustomerModel customer = await SecureStorageHandler.GetCustomerDetails();
+            int customerId = Convert.ToInt16(customer.CustomerID);
+            MenuItemModel? currentMenuItem = MenuItems.Find(item => item.ItemName == name);
+            CartItemModel correspondingCartItem = new(customerId, currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity);
+            CartMessage = await _CartService.AddItemToCart(correspondingCartItem);
+            CartMessageVisibility = "True";
+            await Task.Delay(1000);
+            CartMessageVisibility = "False";
+            CartMessage = "";
+        }
+
+        public void ClearLists()
+        {
+            MomoItems.Clear();
+            SnackItems.Clear();
+            NoodleItems.Clear();
+            DrinkItems.Clear();
+            SandwichItems.Clear();
+            BreakfastItems.Clear();
+        }
+
+        #endregion Methods
     }
 }

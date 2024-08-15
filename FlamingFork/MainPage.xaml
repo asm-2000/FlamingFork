@@ -34,6 +34,20 @@
     <!--#endregion-->
     <ScrollView>
         <VerticalStackLayout>
+            <Border
+                Margin="5,5"
+                Padding="5"
+                BackgroundColor="{StaticResource Primary}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding CartMessageVisibility}"
+                Stroke="{StaticResource Transparent}"
+                StrokeShape="RoundRectangle 10">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    Text="{Binding CartMessage}"
+                    TextColor="{StaticResource White}" />
+            </Border>
             <ActivityIndicator
                 BackgroundColor="{StaticResource Transparent}"
                 HeightRequest="25"
@@ -138,6 +152,8 @@
                                                                             Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                                                CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                                 FontSize="12"
                                                 HeightRequest="35"
                                                 Text="Add To Cart" />
@@ -240,6 +256,8 @@
                                                                             Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                                                CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                                 FontSize="12"
                                                 HeightRequest="35"
                                                 Text="Add To Cart" />
@@ -342,6 +360,8 @@
                                                                             Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                                                CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                                 FontSize="12"
                                                 HeightRequest="35"
                                                 Text="Add To Cart" />
@@ -444,6 +464,8 @@
                                                                             Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                                                CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                                 FontSize="12"
                                                 HeightRequest="35"
                                                 Text="Add To Cart" />
@@ -546,6 +568,8 @@
                                                                             Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                                                CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                                 FontSize="12"
                                                 HeightRequest="35"
                                                 Text="Add To Cart" />
@@ -648,6 +672,8 @@
                                                                             Dark={StaticResource Gold}}" />
                                             <Button
                                                 Margin="10,10"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                                                CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                                 FontSize="12"
                                                 HeightRequest="35"
                                                 Text="Add To Cart" />
