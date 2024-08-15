@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FlamingFork.Helper.Utilities;
 using FlamingFork.Models;
 using FlamingFork.Pages;
 using FlamingFork.Repositories.ApiServices;
+using System.Diagnostics;
 
 namespace FlamingFork.ViewModels
 {
@@ -62,6 +64,8 @@ namespace FlamingFork.ViewModels
 
         #endregion Constructor
 
+        #region Methods
+
         // Checks if the user has previously logged in or not and navigates accordingly
         public async void CheckLoginStatus()
         {
@@ -119,5 +123,65 @@ namespace FlamingFork.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        public void IncreaseQuantity(string itemName)
+        {
+            foreach (MenuItemModel menuItem in MenuItems)
+            {
+                if (menuItem.ItemName == itemName)
+                {
+                    Debug.WriteLine($"{itemName}");
+                    // Only increase the quantity if its value does not exceed 5.
+                    if (menuItem.Quantity <= 4)
+                    {
+                        int quantity = menuItem.Quantity + 1;
+                        menuItem.Quantity = quantity;
+                        Debug.WriteLine(menuItem.Quantity);
+                    }
+                }
+            }
+            ClearLists();
+            SegregateMenuItems();
+        }
+
+        [RelayCommand]
+        public void DecreaseQuantity(string itemName)
+        {
+            foreach (MenuItemModel menuItem in MenuItems)
+            {
+                if (menuItem.ItemName == itemName)
+                {
+                    // Only decrease quantity if its previous quantity is greater than 1.
+                    if (menuItem.Quantity > 1)
+                    {
+                        menuItem.Quantity -= 1;
+                    }
+                }
+            }
+            ClearLists();
+            SegregateMenuItems();
+        }
+
+        [RelayCommand]
+        public async Task AddMenuItemsToCart(string name)
+        {
+           CustomerModel customer = await SecureStorageHandler.GetCustomerDetails();
+           int customerId = Convert.ToInt16(customer.CustomerID);
+           MenuItemModel? currentMenuItem = MenuItems.Find(item => item.ItemName == name);
+           CartItemModel correspondingCartItem = new(customerId,currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity);
+        }
+
+        public void ClearLists()
+        {
+            MomoItems.Clear();
+            SnackItems.Clear();
+            NoodleItems.Clear();
+            DrinkItems.Clear();
+            SandwichItems.Clear();
+            BreakfastItems.Clear();
+        }
+
+        #endregion Methods
     }
 }

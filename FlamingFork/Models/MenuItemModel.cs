@@ -1,6 +1,8 @@
-﻿namespace FlamingFork.Models
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace FlamingFork.Models
 {
-    public class MenuItemModel
+    public partial class MenuItemModel:ObservableObject
     {
         public int ItemId { get; set; }
         public string? ItemName { get; set; }
@@ -8,6 +10,7 @@
         public string? ItemDescription { get; set; }
         public string? ItemCategory { get; set; }
         public string? ItemImageUrl { get; set; }
-        public int Quantity { get; set; } = 1;
+        [ObservableProperty]
+        public int quantity = 1;
     }
 }
