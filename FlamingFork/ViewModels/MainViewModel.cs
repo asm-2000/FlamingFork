@@ -131,13 +131,11 @@ namespace FlamingFork.ViewModels
             {
                 if (menuItem.ItemName == itemName)
                 {
-                    Debug.WriteLine($"{itemName}");
                     // Only increase the quantity if its value does not exceed 5.
                     if (menuItem.Quantity <= 4)
                     {
                         int quantity = menuItem.Quantity + 1;
                         menuItem.Quantity = quantity;
-                        Debug.WriteLine(menuItem.Quantity);
                     }
                 }
             }
