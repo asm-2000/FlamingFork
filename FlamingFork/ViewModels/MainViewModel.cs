@@ -42,6 +42,9 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _CartMessage;
 
+        [ObservableProperty]
+        private string _CartMessageVisibility;
+
         private INavigation _Navigation;
         private MenuItemFetchServiceRepository _MenuItemFetchService;
         private CartServiceRepository _CartService;
@@ -61,6 +64,7 @@ namespace FlamingFork.ViewModels
             _BreakfastItems = [];
             _SnackItems = [];
             _CartMessage = "";
+            _CartMessageVisibility = "False";
             _MenuItemFetchService = new MenuItemFetchServiceRepository();
             _CartService = new CartServiceRepository();
             _Navigation = navigation;
@@ -168,14 +172,16 @@ namespace FlamingFork.ViewModels
         }
 
         [RelayCommand]
-        public async Task AddMenuItemsToCart(string name)
+        public async Task AddMenuItemToCart(string name)
         {
             CustomerModel customer = await SecureStorageHandler.GetCustomerDetails();
             int customerId = Convert.ToInt16(customer.CustomerID);
             MenuItemModel? currentMenuItem = MenuItems.Find(item => item.ItemName == name);
             CartItemModel correspondingCartItem = new(customerId, currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity);
             CartMessage = await _CartService.AddItemToCart(correspondingCartItem);
+            CartMessageVisibility = "True";
             await Task.Delay(1000);
+            CartMessageVisibility = "False";
             CartMessage = "";
         }
 
