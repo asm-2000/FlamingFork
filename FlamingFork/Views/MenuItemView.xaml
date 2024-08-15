@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="FlamingFork.Views.MenuItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:FlamingFork.Models"
+    xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
+    x:DataType="model:MenuItemModel">
+    <VerticalStackLayout>
+        <Border
+            Margin="5,0"
+            BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                              Dark={StaticResource OffBlack}}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10"
+            WidthRequest="142">
+            <VerticalStackLayout Spacing="2">
+                <Image
+                    Aspect="AspectFill"
+                    HeightRequest="120"
+                    WidthRequest="142">
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ItemImageUrl}"
+                            TargetType="Image"
+                            Value="">
+                            <Setter Property="Source" Value="default_image.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding ItemImageUrl}"
+                            TargetType="Image"
+                            Value="{x:Null}">
+                            <Setter Property="Source" Value="sign_in.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                    <Image.Source>
+                        <UriImageSource CachingEnabled="False" Uri="{Binding ItemImageUrl}" />
+                    </Image.Source>
+                </Image>
+                <Label
+                    x:Name="ItemName"
+                    Margin="10,5,10,0"
+                    FontSize="12"
+                    HeightRequest="30"
+                    Text="{Binding ItemName}" />
+                <HorizontalStackLayout Margin="10,0">
+                    <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
+                    <ImageButton
+                        Margin="15,0,5,0"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
+                        CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                        HeightRequest="15"
+                        Source="minus.png"
+                        WidthRequest="16" />
+                    <ImageButton
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
+                        CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                        HeightRequest="15"
+                        Source="add.png"
+                        WidthRequest="15" />
+                </HorizontalStackLayout>
+                <Label
+                    Margin="10,0"
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    Text="{Binding ItemPrice, StringFormat='Price:  Rs. {0}'}"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource Gold}}" />
+                <Button
+                    Margin="10,10"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=AddMenuItemToCartCommand}"
+                    CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
+                    FontSize="12"
+                    HeightRequest="35"
+                    Text="Add To Cart" />
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentView>
