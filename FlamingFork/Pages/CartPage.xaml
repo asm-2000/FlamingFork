@@ -60,12 +60,13 @@
         <ScrollView
             Margin="0,10"
             Padding="10"
-            HeightRequest="300"
+            HeightRequest="450"
             Orientation="Vertical">
             <CollectionView ItemsSource="{Binding CartItems}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:CartItemModel">
                         <Border
+                            Margin="2"
                             Padding="5"
                             BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
                                                               Dark={StaticResource Black}}"
@@ -73,7 +74,7 @@
                             StrokeShape="RoundRectangle 10"
                             VerticalOptions="Start">
                             <Grid
-                                Margin="0,10"
+                                Margin="0,5"
                                 ColumnDefinitions="0.2*,0.5*,0.1*"
                                 ColumnSpacing="5"
                                 RowDefinitions="auto">
