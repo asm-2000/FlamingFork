@@ -177,7 +177,7 @@ namespace FlamingFork.ViewModels
             CustomerModel customer = await SecureStorageHandler.GetCustomerDetails();
             int customerId = Convert.ToInt16(customer.CustomerID);
             MenuItemModel? currentMenuItem = MenuItems.Find(item => item.ItemName == name);
-            CartItemModel correspondingCartItem = new(customerId, currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity);
+            CartItemModel correspondingCartItem = new(customerId, currentMenuItem.ItemName, currentMenuItem.ItemPrice, currentMenuItem.Quantity, currentMenuItem.ItemImageUrl);
             CartMessage = await _CartService.AddItemToCart(correspondingCartItem);
             CartMessageVisibility = "True";
             await Task.Delay(1000);

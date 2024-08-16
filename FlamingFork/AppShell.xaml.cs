@@ -12,6 +12,7 @@ namespace FlamingFork
             
             Routing.RegisterRoute(nameof(UserLoginPage), typeof(UserLoginPage));
             Routing.RegisterRoute(nameof(UserRegistrationPage), typeof(UserRegistrationPage));
+            Routing.RegisterRoute(nameof(CartPage), typeof(CartPage));
         }
     }
 }

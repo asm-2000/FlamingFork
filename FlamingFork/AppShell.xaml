@@ -9,7 +9,9 @@
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     Title="FlamingFork"
     FlyoutWidth="270"
-    Shell.FlyoutBehavior="Flyout">
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarIsVisible="False">
+    <!--#region Flyout Header-->
     <Shell.FlyoutHeader>
         <VerticalStackLayout Padding="20,20,20,10">
             <Border
@@ -43,13 +45,22 @@
                 WidthRequest="250" />
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
+    <!--#endregion-->
+    <!--#region Flyout Content-->
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
-            Title="Our Menu"
+            Title="Explore Food"
             ContentTemplate="{DataTemplate local:MainPage}"
             Icon="menu_icon.png"
             Route="MainPage" />
+        <ShellContent
+            Title="My Cart"
+            ContentTemplate="{DataTemplate page:CartPage}"
+            Icon="cart_logo.png"
+            Route="CartPage" />
     </FlyoutItem>
+    <!--#endregion-->
+    <!--#region Flyout Footer-->
     <Shell.FlyoutFooter>
         <VerticalStackLayout
             Padding="20,10"
@@ -82,6 +93,8 @@
             </Border>
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
+    <!--#endregion-->
+    <!--#region Flyout Styling-->
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid ColumnDefinitions="0.3*,0.5*">
@@ -95,7 +108,7 @@
                     CharacterSpacing="0.2"
                     FontAttributes="Bold"
                     FontSize="18"
-                    HeightRequest="60"
+                    HeightRequest="40"
                     HorizontalTextAlignment="Start"
                     Text="{Binding Title}"
                     TextColor="{AppThemeBinding Light={StaticResource Gray500},
@@ -104,4 +117,5 @@
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
+    <!--#endregion-->
 </Shell>

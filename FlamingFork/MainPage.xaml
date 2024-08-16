@@ -59,7 +59,7 @@
                 Color="{AppThemeBinding Light={StaticResource Gray400},
                                         Dark={StaticResource Gray200}}" />
             <VerticalStackLayout
-                Padding="20,20"
+                Padding="20"
                 IsVisible="{Binding HasLoaded}"
                 Spacing="5">
                 <!--#region Category Title Momo-->
