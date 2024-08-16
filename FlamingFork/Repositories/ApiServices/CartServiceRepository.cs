@@ -80,7 +80,7 @@ namespace FlamingFork.Repositories.ApiServices
                 string token = await SecureStorageHandler.GetAuthenticationToken();
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var uri = new Uri("http://" + _Address + "/cart/allCartItems/"+customerId);
+                var uri = new Uri("http://" + _Address + "/cart/userCart/"+customerId);
                 var response = await _HttpClient.GetAsync(uri);
 
                 // Tries to deserialize the response to List<CartItemModel> in case of sucessful fetch.

@@ -101,18 +101,18 @@
                                         FontSize="14"
                                         Text="{Binding CartItemPrice, StringFormat='Rs {0}'}"
                                         TextColor="{AppThemeBinding Light={StaticResource Gray500},
-                                                                    Dark={StaticResource Primary}}" />
+                                                                    Dark={StaticResource Gray500}}" />
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="14"
                                         Text="{Binding Quantity, StringFormat='Quantity: {0}'}"
                                         TextColor="{AppThemeBinding Light={StaticResource Gray500},
-                                                                    Dark={StaticResource Primary}}" />
+                                                                    Dark={StaticResource Gray500}}" />
                                 </VerticalStackLayout>
                                 <ImageButton
                                     Grid.Column="2"
-                                    HeightRequest="30"
-                                    HorizontalOptions="Start"
+                                    HeightRequest="25"
+                                    HorizontalOptions="End"
                                     Source="trash.png"
                                     VerticalOptions="Center"
                                     WidthRequest="30" />
