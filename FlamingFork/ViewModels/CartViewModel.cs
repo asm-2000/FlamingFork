@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FlamingFork.Helper.Utilities;
 using FlamingFork.Models;
 using FlamingFork.Repositories.ApiServices;
 using System.Collections.ObjectModel;
@@ -44,6 +45,7 @@ namespace FlamingFork.ViewModels
         {
             _HasFetched = "False";
             _IsFetching = "True";
+            _CheckoutStatusVisible = "False";
             _TotalItems = 0;
             _CartService = new CartServiceRepository();
             FetchCartItems();
@@ -92,15 +94,19 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task CheckoutFromCart()
         {
-            CheckoutStatus = await _CartService.CheckoutAndPlaceOrder(CartItems);
+            string customerDefaultAddress = await GetCustomerDefaultAddress();
+            string customerCurrentAddress = await Application.Current.MainPage.DisplayPromptAsync("Address Confimation!", "Please update your delivery location if necessary!",
+                                          initialValue: customerDefaultAddress,
+                                          accept: "OK");
+            CheckoutStatus = await _CartService.CheckoutAndPlaceOrder(CartItems, customerCurrentAddress);
             // Show sucess label if order is placed sucessfully and clear cart.
-            if(CheckoutStatus == "Order placed sucessfully!")
+            if (CheckoutStatus == "Order placed sucessfully!")
             {
                 CheckoutStatusVisible = "True";
                 await _CartService.ClearCart();
                 await FetchCartItems();
                 CheckoutStatusVisible = "False";
-            }   
+            }
             else
             {
                 CheckoutStatusVisible = "True";
@@ -117,6 +123,13 @@ namespace FlamingFork.ViewModels
                 totalPrice += cartItem.Quantity * cartItem.CartItemPrice;
             }
             return totalPrice;
+        }
+
+        public async Task<string> GetCustomerDefaultAddress()
+        {
+            CustomerModel customerDetails = await SecureStorageHandler.GetCustomerDetails();
+            string? defaultAddress = customerDetails.Address;
+            return defaultAddress;
         }
 
         #endregion Methods

@@ -189,7 +189,7 @@ namespace FlamingFork.Repositories.ApiServices
 
         #region Cart Checkout Handler
 
-        public async Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems)
+        public async Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems, string customerCurrentAddress)
         {
             List<OrderItemModel> orderItems = new List<OrderItemModel>();
             ApiResponseMessageModal? apiResponse = new();
@@ -197,14 +197,13 @@ namespace FlamingFork.Repositories.ApiServices
             CustomerModel currentCustomer = await SecureStorageHandler.GetCustomerDetails();
             int customerId = Convert.ToInt16(currentCustomer.CustomerID);
             string? customerContact = currentCustomer.Contact;
-            string? customerAddress = currentCustomer.Address;
             // Maps each cartitem to orderitem.
             foreach (CartItemModel cartItem in cartItems)
             {
                 OrderItemModel orderItem = new(cartItem.CartItemName, cartItem.CartItemPrice, cartItem.Quantity);
                 orderItems.Add(orderItem);
             }
-            CustomerOrderModel customerOrder = new(customerId, customerContact, customerAddress, "Placed", orderItems);
+            CustomerOrderModel customerOrder = new(customerId, customerContact, customerCurrentAddress, "Placed", orderItems);
             // Json serialization.
             var options = new JsonSerializerOptions
             {

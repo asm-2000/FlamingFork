@@ -10,7 +10,7 @@ namespace FlamingFork.Repositories.Interfaces
 
         Task<string> ClearCart();
 
-        Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems);
+        Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems, string customerCurrentAddress);
         
     }
 }
