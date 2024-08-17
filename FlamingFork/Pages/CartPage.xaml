@@ -68,6 +68,7 @@
                     FontSize="14"
                     HeightRequest="30"
                     Text="Clear Cart"
+                    Command="{Binding ClearAllCartItemsCommand}"
                     TextColor="{StaticResource Gray400}" />
             </Border>
         </VerticalStackLayout>
@@ -136,6 +137,8 @@
                                 </VerticalStackLayout>
                                 <ImageButton
                                     Grid.Column="2"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartViewModel}}, Path=DeleteCartItemCommand}"
+                                    CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
                                     HeightRequest="25"
                                     HorizontalOptions="End"
                                     Source="trash.png"

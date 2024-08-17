@@ -162,7 +162,7 @@ namespace FlamingFork.Repositories.ApiServices
                 string token = await SecureStorageHandler.GetAuthenticationToken();
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var uri = new Uri("http://" + _Address + "/cart/clearCartItems/" + details);
+                var uri = new Uri("http://" + _Address + "/cart/deleteCartItem/" + details);
                 var response = await _HttpClient.DeleteAsync(uri);
 
                 if (response.IsSuccessStatusCode)

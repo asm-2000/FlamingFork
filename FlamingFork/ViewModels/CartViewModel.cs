@@ -53,19 +53,25 @@ namespace FlamingFork.ViewModels
             TotalItems = CartItems.Count;
             TotalPrice = CalculateTotalPrice();
             IsFetching = "False";
-            HasFetched = "True";
+            if(TotalItems > 0)
+            {
+                HasFetched = "True";
+            }    
         }
 
         [RelayCommand]
-        public async Task DeleteCartItem()
+        public async Task DeleteCartItem(string cartItemName)
         {
+            CartItemModel specificCartItem = CartItems.Find(cartItem => cartItem.CartItemName == cartItemName);
+            await _CartService.DeleteSpecificCartItem(specificCartItem);
+            await FetchCartItems();
         }
 
         [RelayCommand]
-        public async Task ClearALlCartItems()
+        public async Task ClearAllCartItems()
         {
             await _CartService.ClearCart();
-            CartItems.Clear();
+            await FetchCartItems();
         }
 
         public int CalculateTotalPrice()
