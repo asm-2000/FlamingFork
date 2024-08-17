@@ -80,7 +80,7 @@ namespace FlamingFork.Repositories.ApiServices
                 string token = await SecureStorageHandler.GetAuthenticationToken();
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var uri = new Uri("http://" + _Address + "/cart/userCart/"+customerId);
+                var uri = new Uri("http://" + _Address + "/cart/userCart/" + customerId);
                 var response = await _HttpClient.GetAsync(uri);
 
                 // Tries to deserialize the response to List<CartItemModel> in case of sucessful fetch.
@@ -108,9 +108,83 @@ namespace FlamingFork.Repositories.ApiServices
 
         #endregion Cart Items Fetcher
 
+        #region Cart Clearer
+
         public async Task<string> ClearCart()
         {
-            return "sucess";
+            ApiResponseMessageModal? apiResponse = new();
+            CustomerModel currentCustomer = await SecureStorageHandler.GetCustomerDetails();
+            int customerId = Convert.ToInt16(currentCustomer.CustomerID);
+
+            try
+            {
+                // Fetches authentication token from secure storage.
+                string token = await SecureStorageHandler.GetAuthenticationToken();
+                _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var uri = new Uri("http://" + _Address + "/cart/clearCartItems/" + customerId);
+                var response = await _HttpClient.DeleteAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    apiResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    return apiResponse.Message;
+                }
+                // Returns failure if status code is not ok.
+                else
+                {
+                    return "Failed to clear your cart!";
+                }
+            }
+            // Returns empty list if communication with API fails.
+            catch
+            {
+                return "Failed: Could not communicate with server!";
+            }
         }
+
+        #endregion Cart Clearer
+
+        #region Cart Item Deleter
+
+        public async Task<string> DeleteSpecificCartItem(CartItemModel cartItem)
+        {
+            ApiResponseMessageModal? apiResponse = new();
+
+            CustomerModel currentCustomer = await SecureStorageHandler.GetCustomerDetails();
+            int customerId = Convert.ToInt16(currentCustomer.CustomerID);
+            string details = customerId + " " + Convert.ToString(cartItem.CartItemId);
+            try
+            {
+                // Fetches authentication token from secure storage.
+                string token = await SecureStorageHandler.GetAuthenticationToken();
+                _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var uri = new Uri("http://" + _Address + "/cart/clearCartItems/" + details);
+                var response = await _HttpClient.DeleteAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    apiResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                    return apiResponse.Message;
+                }
+                // Returns failure if status code is not ok.
+                else
+                {
+                    return "Failed to delete cart item!";
+                }
+            }
+            // Returns empty list if communication with API fails.
+            catch
+            {
+                return "Failed: Could not communicate with server!";
+            }
+        }
+
+        #endregion Cart Item Deleter
     }
 }
