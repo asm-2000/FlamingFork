@@ -25,6 +25,15 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _HasFetched;
 
+        [ObservableProperty]
+        private string _CartIsEmpty;
+
+        [ObservableProperty]
+        private string _CheckoutStatus;
+
+        [ObservableProperty]
+        private string _CheckoutStatusVisible;
+
         private CartServiceRepository _CartService;
 
         #endregion Propeties
@@ -53,15 +62,21 @@ namespace FlamingFork.ViewModels
             TotalItems = CartItems.Count;
             TotalPrice = CalculateTotalPrice();
             IsFetching = "False";
-            if(TotalItems > 0)
+            if (TotalItems > 0)
             {
                 HasFetched = "True";
-            }    
+                CartIsEmpty = "False";
+            }
+            else
+            {
+                CartIsEmpty = "True";
+            }
         }
 
         [RelayCommand]
         public async Task DeleteCartItem(string cartItemName)
         {
+            // Find specific cart item by name from the list, CartItems.
             CartItemModel specificCartItem = CartItems.Find(cartItem => cartItem.CartItemName == cartItemName);
             await _CartService.DeleteSpecificCartItem(specificCartItem);
             await FetchCartItems();
@@ -72,6 +87,20 @@ namespace FlamingFork.ViewModels
         {
             await _CartService.ClearCart();
             await FetchCartItems();
+        }
+
+        [RelayCommand]
+        public async Task CheckoutFromCart()
+        {
+            CheckoutStatus = await _CartService.CheckoutAndPlaceOrder(CartItems);
+            // Show sucess label if order is placed sucessfully and clear cart.
+            if(CheckoutStatus == "Order Placed Sucessfully!")
+            {
+                CheckoutStatusVisible = "True";
+                await _CartService.ClearCart();
+                await FetchCartItems();
+                CheckoutStatusVisible = "False";
+            }   
         }
 
         public int CalculateTotalPrice()

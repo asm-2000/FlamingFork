@@ -186,5 +186,11 @@ namespace FlamingFork.Repositories.ApiServices
         }
 
         #endregion Cart Item Deleter
+        #region Cart Checkout Handler
+        public async Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems)
+        {
+            return "sucess";
+        }
+        #endregion
     }
 }

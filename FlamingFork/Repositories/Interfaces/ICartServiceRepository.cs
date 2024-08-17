@@ -9,5 +9,8 @@ namespace FlamingFork.Repositories.Interfaces
         Task<List<CartItemModel>> GetAllCartItems();
 
         Task<string> ClearCart();
+
+        Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems);
+        
     }
 }

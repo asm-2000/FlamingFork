@@ -65,10 +65,10 @@
                 <Button
                     Padding="0"
                     BackgroundColor="{StaticResource Transparent}"
+                    Command="{Binding ClearAllCartItemsCommand}"
                     FontSize="14"
                     HeightRequest="30"
                     Text="Clear Cart"
-                    Command="{Binding ClearAllCartItemsCommand}"
                     TextColor="{StaticResource Gray400}" />
             </Border>
         </VerticalStackLayout>
@@ -82,6 +82,27 @@
             WidthRequest="20"
             Color="{AppThemeBinding Light={StaticResource Gray400},
                                     Dark={StaticResource Gray200}}" />
+        <!--#region Empty Cart UI-->
+        <VerticalStackLayout
+            Margin="0,150"
+            Padding="20"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CartIsEmpty}"
+            VerticalOptions="Center">
+            <Image
+                HeightRequest="150"
+                Source="empty_cart.png"
+                WidthRequest="150" />
+            <Label
+                Margin="0,20"
+                CharacterSpacing="1"
+                FontAttributes="Bold"
+                FontSize="25"
+                Text="So empty...   :("
+                TextColor="{StaticResource Gray300}" />
+        </VerticalStackLayout>
+        <!--#endregion-->
+        <!--#region Cart Content-->
         <ScrollView
             Padding="10,0"
             HeightRequest="380"
@@ -150,6 +171,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+        <!--#endregion-->
+        <!--#region Footer UI-->
         <VerticalStackLayout IsVisible="{Binding HasFetched}">
             <Grid Margin="10,10" ColumnDefinitions="0.5*,0.5*">
                 <Label
@@ -174,9 +197,11 @@
             <Button
                 Margin="10,20"
                 CharacterSpacing="1"
+                Command="{Binding CheckoutFromCartCommand}"
                 FontAttributes="Bold"
                 FontSize="20"
                 Text="Checkout" />
         </VerticalStackLayout>
+        <!--#endregion-->
     </VerticalStackLayout>
 </ContentPage>
