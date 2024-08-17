@@ -4,7 +4,6 @@ using FlamingFork.Helper.Utilities;
 using FlamingFork.Models;
 using FlamingFork.Pages;
 using FlamingFork.Repositories.ApiServices;
-using System.Diagnostics;
 
 namespace FlamingFork.ViewModels
 {

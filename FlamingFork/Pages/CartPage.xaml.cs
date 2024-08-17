@@ -4,9 +4,17 @@ namespace FlamingFork.Pages;
 
 public partial class CartPage : ContentPage
 {
-	public CartPage()
-	{
-		InitializeComponent();
-		BindingContext = new CartViewModel();
-	}
+    private readonly CartViewModel _CartViewModel;
+    public CartPage(CartViewModel cartViewModel)
+    {
+        InitializeComponent();
+        _CartViewModel = cartViewModel;
+        BindingContext = cartViewModel;
+    }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        await _CartViewModel.FetchCartItems();
+    }
 }

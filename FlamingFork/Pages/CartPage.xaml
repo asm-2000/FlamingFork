@@ -30,95 +30,139 @@
     </Shell.TitleView>
     <!--#endregion-->
     <VerticalStackLayout Padding="20,10">
-        <!--#region Title-->
+        <!--#region Order Status UI-->
         <Border
-            Padding="10"
-            Stroke="{AppThemeBinding Light={StaticResource Gold},
-                                     Dark={StaticResource Primary}}"
-            StrokeShape="RoundRectangle 20"
-            StrokeThickness="3">
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CheckoutStatusVisible}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
             <Label
                 FontAttributes="Bold"
-                FontSize="18"
-                HorizontalOptions="Start"
-                TextColor="{AppThemeBinding Light={StaticResource Gray500},
-                                            Dark={StaticResource Gray300}}"
-                VerticalOptions="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span
-                            FontSize="25"
-                            Text="Items "
-                            TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                        Dark={StaticResource Gold}}" />
-                        <Span Text="in your cart:" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                FontSize="12"
+                Text="{Binding CheckoutStatus}"
+                TextColor="{StaticResource White}" />
         </Border>
         <!--#endregion-->
+        <!--#region Title-->
+        <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <Border
+                Padding="10"
+                Stroke="{AppThemeBinding Light={StaticResource Gold},
+                                         Dark={StaticResource Primary}}"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="3">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                Dark={StaticResource Gray300}}"
+                    VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                FontSize="25"
+                                Text="Items "
+                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                            Dark={StaticResource Gold}}" />
+                            <Span Text="in your cart:" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+            <Border
+                Margin="10"
+                HorizontalOptions="End"
+                StrokeShape="RoundRectangle 10"
+                WidthRequest="100">
+                <Button
+                    Padding="0"
+                    BackgroundColor="{StaticResource Transparent}"
+                    Command="{Binding ClearAllCartItemsCommand}"
+                    FontSize="14"
+                    HeightRequest="30"
+                    Text="Clear Cart"
+                    TextColor="{StaticResource Gray400}" />
+            </Border>
+        </VerticalStackLayout>
+        <!--#endregion-->
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsFetching}"
+            IsVisible="{Binding IsFetching}"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <!--#region Empty Cart UI-->
+        <VerticalStackLayout
+            Margin="0,150"
+            Padding="20"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CartIsEmpty}"
+            VerticalOptions="Center">
+            <Image
+                HeightRequest="150"
+                Source="empty_cart.png"
+                WidthRequest="150" />
+            <Label
+                Margin="0,20"
+                CharacterSpacing="1"
+                FontAttributes="Bold"
+                FontSize="25"
+                Text="So empty...   :("
+                TextColor="{StaticResource Gray300}" />
+        </VerticalStackLayout>
+        <!--#endregion-->
+        <!--#region Cart Content-->
         <ScrollView
-            Margin="0,10"
-            Padding="10"
-            HeightRequest="300"
+            Padding="10,0"
+            HeightRequest="380"
+            IsVisible="{Binding HasFetched}"
             Orientation="Vertical">
-            <CollectionView>
+            <CollectionView ItemsSource="{Binding CartItems}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:CartItemModel" />
-                    <Border
-                        Padding="5"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Stroke="{StaticResource Transparent}"
-                        StrokeShape="RoundRectangle 10"
-                        VerticalOptions="Start">
-                        <Grid
-                            Margin="0,10"
-                            ColumnDefinitions="0.2*,0.5*,0.1*"
-                            ColumnSpacing="5"
-                            RowDefinitions="auto">
-                            <Border
-                                HeightRequest="60"
-                                HorizontalOptions="Center"
-                                Stroke="{StaticResource Transparent}"
-                                StrokeShape="RoundRectangle 10"
-                                WidthRequest="60">
-                                <Image Source="{Binding}" />
-                            </Border>
-                            <VerticalStackLayout
-                                Grid.Column="1"
-                                HorizontalOptions="Start"
-                                Spacing="2">
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="18"
-                                    Text="Chicken Chowmein"
-                                    TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                                Dark={StaticResource Gray200}}" />
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="14"
-                                    Text="Price: Rs 200"
-                                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
-                                                                Dark={StaticResource Primary}}" />
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="14"
-                                    Text="Quantity: 3"
-                                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
-                                                                Dark={StaticResource Primary}}" />
-                            </VerticalStackLayout>
-                            <ImageButton
-                                Grid.Column="2"
-                                HeightRequest="30"
-                                HorizontalOptions="Start"
-                                Source="trash.png"
-                                VerticalOptions="Center"
-                                WidthRequest="30" />
-                        </Grid>
-                    </Border>
+                    <DataTemplate>
+                        <view:CartItemView />
+                    </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
+        <!--#endregion-->
+        <!--#region Footer UI-->
+        <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <Grid Margin="10,10" ColumnDefinitions="0.5*,0.5*">
+                <Label
+                    Margin="0,10,0,0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding TotalItems, StringFormat='Total items:  {0}'}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                Dark={StaticResource Gray300}}" />
+                <Label
+                    Grid.Column="1"
+                    Margin="0,10,0,0"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="End"
+                    Text="{Binding TotalPrice, StringFormat='Total price: Rs {0}'}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                Dark={StaticResource Gray300}}" />
+            </Grid>
+            <BoxView BackgroundColor="{StaticResource Gray400}" HeightRequest="1" />
+            <Button
+                Margin="10,20"
+                CharacterSpacing="1"
+                Command="{Binding CheckoutFromCartCommand}"
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="Checkout" />
+        </VerticalStackLayout>
+        <!--#endregion-->
     </VerticalStackLayout>
 </ContentPage>
