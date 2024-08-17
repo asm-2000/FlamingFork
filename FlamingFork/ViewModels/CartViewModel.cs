@@ -94,13 +94,19 @@ namespace FlamingFork.ViewModels
         {
             CheckoutStatus = await _CartService.CheckoutAndPlaceOrder(CartItems);
             // Show sucess label if order is placed sucessfully and clear cart.
-            if(CheckoutStatus == "Order Placed Sucessfully!")
+            if(CheckoutStatus == "Order placed sucessfully!")
             {
                 CheckoutStatusVisible = "True";
                 await _CartService.ClearCart();
                 await FetchCartItems();
                 CheckoutStatusVisible = "False";
             }   
+            else
+            {
+                CheckoutStatusVisible = "True";
+                await Task.Delay(2000);
+                CheckoutStatusVisible = "False";
+            }
         }
 
         public int CalculateTotalPrice()

@@ -30,6 +30,22 @@
     </Shell.TitleView>
     <!--#endregion-->
     <VerticalStackLayout Padding="20,10">
+        <!--#region Order Status UI-->
+        <Border
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CheckoutStatusVisible}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="{Binding CheckoutStatus}"
+                TextColor="{StaticResource White}" />
+        </Border>
+        <!--#endregion-->
         <!--#region Title-->
         <VerticalStackLayout IsVisible="{Binding HasFetched}">
             <Border

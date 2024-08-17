@@ -239,7 +239,6 @@ namespace FlamingFork.Repositories.ApiServices
             {
                 return ex.Message;
             }
-            return "sucess";
         }
 
         #endregion Cart Checkout Handler
