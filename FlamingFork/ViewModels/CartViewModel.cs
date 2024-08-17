@@ -13,6 +13,18 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private List<CartItemModel> _CartItems;
 
+        [ObservableProperty]
+        private int _TotalItems;
+
+        [ObservableProperty]
+        private int _TotalPrice;
+
+        [ObservableProperty]
+        private string _IsFetching;
+
+        [ObservableProperty]
+        private string _HasFetched;
+
         private CartServiceRepository _CartService;
 
         #endregion Propeties
@@ -21,6 +33,9 @@ namespace FlamingFork.ViewModels
 
         public CartViewModel()
         {
+            _HasFetched = "False";
+            _IsFetching = "True";
+            _TotalItems = 0;
             _CartService = new CartServiceRepository();
             FetchCartItems();
         }
@@ -32,7 +47,13 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task FetchCartItems()
         {
+            IsFetching = "True";
+            HasFetched = "False";
             CartItems = await _CartService.GetAllCartItems();
+            TotalItems = CartItems.Count;
+            TotalPrice = CalculateTotalPrice();
+            IsFetching = "False";
+            HasFetched = "True";
         }
 
         [RelayCommand]
@@ -45,6 +66,16 @@ namespace FlamingFork.ViewModels
         {
             await _CartService.ClearCart();
             CartItems.Clear();
+        }
+
+        public int CalculateTotalPrice()
+        {
+            int totalPrice = 0;
+            foreach (CartItemModel cartItem in CartItems)
+            {
+                totalPrice += cartItem.Quantity * cartItem.CartItemPrice;
+            }
+            return totalPrice;
         }
 
         #endregion Methods
