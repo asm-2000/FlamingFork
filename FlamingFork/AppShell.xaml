@@ -58,6 +58,11 @@
             ContentTemplate="{DataTemplate page:CartPage}"
             Icon="cart_logo.png"
             Route="CartPage" />
+        <ShellContent
+            Title="My Orders"
+            ContentTemplate="{DataTemplate page:OrderPage}"
+            Icon="order_logo.png"
+            Route="OrderPage" />
     </FlyoutItem>
     <!--#endregion-->
     <!--#region Flyout Footer-->
