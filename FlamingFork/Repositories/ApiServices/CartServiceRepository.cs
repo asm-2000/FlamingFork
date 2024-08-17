@@ -186,12 +186,62 @@ namespace FlamingFork.Repositories.ApiServices
         }
 
         #endregion Cart Item Deleter
+
         #region Cart Checkout Handler
+
         public async Task<string> CheckoutAndPlaceOrder(List<CartItemModel> cartItems)
         {
+            List<OrderItemModel> orderItems = new List<OrderItemModel>();
+            ApiResponseMessageModal? apiResponse = new();
+            // Extract necessary details about customer from secure storage.
+            CustomerModel currentCustomer = await SecureStorageHandler.GetCustomerDetails();
+            int customerId = Convert.ToInt16(currentCustomer.CustomerID);
+            string? customerContact = currentCustomer.Contact;
+            string? customerAddress = currentCustomer.Address;
+            // Maps each cartitem to orderitem.
+            foreach (CartItemModel cartItem in cartItems)
+            {
+                OrderItemModel orderItem = new(cartItem.CartItemName, cartItem.CartItemPrice, cartItem.Quantity);
+                orderItems.Add(orderItem);
+            }
+            CustomerOrderModel customerOrder = new(customerId, customerContact, customerAddress, "Placed", orderItems);
+            // Json serialization.
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            var jsonContent = JsonSerializer.Serialize<CustomerOrderModel>(customerOrder, options);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            // Commmnicates with API and returns received message.
+            try
+            {
+                // Fetches authentication token from secure storage.
+                string token = await SecureStorageHandler.GetAuthenticationToken();
+                _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+                var uri = new Uri("http://" + _Address + "/order/placeCustomerOrder");
+                var response = await _HttpClient.PostAsync(uri, content);
+
+                // Tries to deserialize the response to ApiResponseMessageModel in case of sucessful order placement.
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    apiResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    return apiResponse.Message;
+                }
+                else
+                {
+                    return "Failed to place order!";
+                }
+            }
+            // Returns exception message if communication with API fails.
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
             return "sucess";
         }
-        #endregion
+
+        #endregion Cart Checkout Handler
     }
 }
