@@ -3,7 +3,8 @@
     x:Class="FlamingFork.Pages.OrderPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:model="clr-namespace:FlamingFork.ViewModels"
+    xmlns:model="clr-namespace:FlamingFork.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     Title="My Orders"
     x:DataType="viewmodel:OrderViewModel">
@@ -41,6 +42,19 @@
                                     Dark={StaticResource Gray200}}" />
         <!--#endregion-->
         <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <!--#region No Order UI-->
+            <VerticalStackLayout IsVisible="{Binding OrdersNotPresent}">
+                <Image
+                    HeightRequest="150"
+                    Source="no_orders_icon.png"
+                    WidthRequest="150" />
+                <Label
+                    Margin="0,20"
+                    FontSize="25"
+                    Text="No orders to show..  :( "
+                    TextColor="{StaticResource Gray300}" />
+            </VerticalStackLayout>
+            <!--#endregion-->
             <!--#region Title-->
             <VerticalStackLayout IsVisible="{Binding OrdersPresent}">
                 <Border
@@ -69,6 +83,101 @@
                     </Label>
                 </Border>
             </VerticalStackLayout>
+            <!--#endregion-->
+            <!--#region Order Visibility Switch-->
+            <HorizontalStackLayout
+                Margin="0"
+                HorizontalOptions="End"
+                Spacing="10">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    Text="Show All: "
+                    TextColor="{AppThemeBinding Light={StaticResource Gray400},
+                                                Dark={StaticResource Gray300}}"
+                    VerticalOptions="Center" />
+                <Switch x:Name="ShowAllOrderSwitch" VerticalOptions="Center">
+                    <Switch.Behaviors>
+                        <toolkit:EventToCommandBehavior
+                            Command="{Binding ChangeOrderVisibilityByTypeCommand}"
+                            CommandParameter="{Binding Source={Reference ShowAllOrderSwitch}, Path=IsToggled}"
+                            EventName="Toggled" />
+                    </Switch.Behaviors>
+                </Switch>
+            </HorizontalStackLayout>
+            <!--#endregion-->
+            <!--#region Order Content-->
+            <ScrollView Padding="20,0" Orientation="Vertical">
+                <Border
+                    Padding="10"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                      Dark={StaticResource Black}}"
+                    Stroke="{StaticResource Transparent}"
+                    StrokeShape="RoundRectangle 10">
+                    <VerticalStackLayout>
+                        <Border
+                            Padding="10,2"
+                            HorizontalOptions="End"
+                            MaximumWidthRequest="200"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                                     Dark={StaticResource Gold}}"
+                            StrokeShape="RoundRectangle 10">
+                            <Label
+                                FontSize="12"
+                                Text="Status: Placed"
+                                TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                            Dark={StaticResource Gray50}}" />
+                        </Border>
+                        <Image
+                            Margin="20,30"
+                            HeightRequest="80"
+                            Source="order_placed_icon.png" />
+                        <Border
+                            Padding="10,2"
+                            HeightRequest="44"
+                            Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                                     Dark={StaticResource Primary}}"
+                            StrokeShape="RoundRectangle 10">
+                            <Label
+                                FontSize="14"
+                                LineBreakMode="CharacterWrap"
+                                MaxLines="2"
+                                Text="Rightway Enterprises, Aloknagar-31, Kathmandu"
+                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                            Dark={StaticResource PrimaryDarkText}}" />
+                        </Border>
+                        <ScrollView Padding="10,5" Orientation="Horizontal">
+                            <Label Text="Chicken Momo(2) Chicken Burger(1) Fanta(3) " TextColor="{StaticResource Gray400}" />
+                        </ScrollView>
+                        <Grid Padding="10">
+                            <Label
+                                FontSize="14"
+                                HorizontalOptions="Start"
+                                LineBreakMode="CharacterWrap"
+                                MaxLines="2"
+                                Text="Total: Rs 1000"
+                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                            Dark={StaticResource PrimaryDarkText}}"
+                                VerticalTextAlignment="Center" />
+                            <Button
+                                Padding="5"
+                                HeightRequest="30"
+                                HorizontalOptions="End"
+                                Text="Cancel Order"
+                                WidthRequest="100">
+                                <Button.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding OrderStatus}"
+                                        TargetType="Button"
+                                        Value="Placed">
+                                        <Setter Property="IsVisible" Value="True" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </ScrollView>
             <!--#endregion-->
         </VerticalStackLayout>
     </VerticalStackLayout>
