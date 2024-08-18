@@ -54,7 +54,24 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task FetchCustomerOrders()
         {
+            // Shows activity indicator while the app is fetching the customer orders.
+            IsFetching = "True";
+            HasFetched = "False";
             AllCustomerOrders = await _OrderServices.GetCustomerOrders();
+            // Check for empty order list and show proper UI.
+            if(AllCustomerOrders.Count == 0)
+            {
+                OrdersNotPresent = "True";
+                OrdersPresent = "False";
+            }
+            else
+            {
+                OrdersNotPresent = "False";
+                OrdersPresent = "True";
+            }
+            // Change the flag values after sucessful fetch call.
+            HasFetched = "True";
+            IsFetching = "False";
         }
 
         #endregion Methods
