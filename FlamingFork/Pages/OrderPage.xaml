@@ -29,9 +29,47 @@
     </Shell.TitleView>
     <!--#endregion-->
     <VerticalStackLayout Padding="20,10">
-        <Label
+        <!--#region Loading indicator-->
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="20"
             HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
+            IsRunning="{Binding IsFetching}"
+            IsVisible="{Binding IsFetching}"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <!--#endregion-->
+        <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <!--#region Title-->
+            <VerticalStackLayout IsVisible="{Binding OrdersPresent}">
+                <Border
+                    Padding="10"
+                    Stroke="{AppThemeBinding Light={StaticResource Gold},
+                                             Dark={StaticResource Primary}}"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="3">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="Start"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                    Dark={StaticResource Gray300}}"
+                        VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    FontSize="25"
+                                    Text="Your "
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                Dark={StaticResource Gold}}" />
+                                <Span Text="orders:" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Border>
+            </VerticalStackLayout>
+            <!--#endregion-->
+        </VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
