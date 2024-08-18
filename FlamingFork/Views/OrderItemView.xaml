@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="FlamingFork.Views.OrderItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="This">
+    <VerticalStackLayout>
+        <Border
+            Padding="10"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                              Dark={StaticResource Black}}"
+            BindingContext="{Reference This}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <VerticalStackLayout>
+                <Label
+                    x:Name="OrderIdLabel"
+                    IsVisible="False"
+                    Text="{Binding OrderId}" />
+                <Border
+                    Padding="10,2"
+                    HorizontalOptions="End"
+                    MaximumWidthRequest="200"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                             Dark={StaticResource Gold}}"
+                    StrokeShape="RoundRectangle 10">
+                    <Label
+                        x:Name="OrderStatusLabel"
+                        FontSize="12"
+                        Text="{Binding OrderStatus, StringFormat='Status: {0}'}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                    Dark={StaticResource Gray50}}" />
+                </Border>
+                <Image
+                    Margin="20,30"
+                    HeightRequest="80"
+                    Source="order_placed_icon.png">
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Button"
+                            Value="Placed">
+                            <Setter Property="ImageSource" Value="order_placed_icon.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Button"
+                            Value="Being Prepared">
+                            <Setter Property="ImageSource" Value="order_placed_icon.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Button"
+                            Value="Delivered">
+                            <Setter Property="ImageSource" Value="order_delivered_icon.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Button"
+                            Value="Cancelled">
+                            <Setter Property="ImageSource" Value="order_cancelled_icon.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+                <Border
+                    Padding="10,2"
+                    HeightRequest="44"
+                    Stroke="{AppThemeBinding Light={StaticResource Gray200},
+                                             Dark={StaticResource Primary}}"
+                    StrokeShape="RoundRectangle 10">
+                    <Label
+                        FontSize="14"
+                        LineBreakMode="CharacterWrap"
+                        MaxLines="2"
+                        Text="{Binding DeliveryAddress}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource PrimaryDarkText}}" />
+                </Border>
+                <ScrollView Padding="10,5" Orientation="Horizontal">
+                    <Label Text="Chicken Momo(2) Chicken Burger(1) Fanta(3) " TextColor="{StaticResource Gray400}" />
+                </ScrollView>
+                <Grid Padding="10">
+                    <Label
+                        FontSize="14"
+                        HorizontalOptions="Start"
+                        LineBreakMode="CharacterWrap"
+                        MaxLines="2"
+                        Text="Total: Rs 1000"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource PrimaryDarkText}}"
+                        VerticalTextAlignment="Center" />
+                    <Button
+                        Padding="5"
+                        Command="{Binding CancelButtonCommand}"
+                        CommandParameter="{Binding Source={Reference OrderIdLabel}, Path=Text}"
+                        HeightRequest="30"
+                        HorizontalOptions="End"
+                        IsVisible="False"
+                        Text="Cancel Order"
+                        WidthRequest="100">
+                        <Button.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                                TargetType="Button"
+                                Value="Placed">
+                                <Setter Property="IsVisible" Value="True" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentView>
