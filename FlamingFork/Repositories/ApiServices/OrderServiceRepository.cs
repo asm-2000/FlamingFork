@@ -42,10 +42,13 @@ namespace FlamingFork.Repositories.ApiServices
                     foreach(CustomerOrderModel customerOrder in allCustomerOrders)
                     {
                         string stringifiedItems = string.Empty;
+                        int totalPrice = 0;
                         foreach(OrderItemModel orderItem in customerOrder.OrderItems)
                         {
+                            totalPrice += orderItem.OrderItemPrice * orderItem.Quantity;
                             stringifiedItems = orderItem.OrderItemName + "(" + orderItem.Quantity + ")" + " ";
                         }
+                        customerOrder.TotalPrice = totalPrice;
                         customerOrder.StringifiedItems = stringifiedItems;
                     }
                     return allCustomerOrders;
