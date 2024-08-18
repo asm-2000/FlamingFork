@@ -66,7 +66,7 @@ namespace FlamingFork.Repositories.ApiServices
         public async Task<List<CartItemModel>> GetAllCartItems()
         {
             CartItemsModel? fetchedCartItems = new();
-            ApiResponseMessageModal? ErrorResponse = new();
+            ApiResponseMessageModal? errorResponse = new();
             var options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -95,7 +95,7 @@ namespace FlamingFork.Repositories.ApiServices
                 else
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    ErrorResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    errorResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     return [];
                 }
             }

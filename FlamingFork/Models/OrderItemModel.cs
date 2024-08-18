@@ -1,6 +1,6 @@
 ﻿namespace FlamingFork.Models
 {
-    class OrderItemModel
+    public class OrderItemModel
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
