@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:FlamingFork.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:view="clr-namespace:FlamingFork.Views"
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     Title="My Orders"
     x:DataType="viewmodel:OrderViewModel">
@@ -43,7 +44,7 @@
         <!--#endregion-->
         <VerticalStackLayout IsVisible="{Binding HasFetched}">
             <!--#region No Order UI-->
-            <VerticalStackLayout IsVisible="{Binding OrdersNotPresent}">
+            <VerticalStackLayout Margin="0,100" IsVisible="{Binding OrdersNotPresent}">
                 <Image
                     HeightRequest="150"
                     Source="no_orders_icon.png"
@@ -108,6 +109,17 @@
             <!--#endregion-->
             <!--#region Order Content-->
             <ScrollView Padding="20,0" Orientation="Vertical">
+                <CollectionView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:CustomerOrderModel">
+                            <view:OrderItemView
+                                DeliveryAddress="{Binding CustomerAddress}"
+                                Items="{Binding StringifiedItems}"
+                                OrderStatus="{Binding OrderStatus}"
+                                TotalPrice="{Binding TotalPrice}" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </ScrollView>
             <!--#endregion-->
         </VerticalStackLayout>
