@@ -2,6 +2,7 @@
 using FlamingFork.Models;
 using FlamingFork.Repositories.Interfaces;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace FlamingFork.Repositories.ApiServices
@@ -71,7 +72,34 @@ namespace FlamingFork.Repositories.ApiServices
 
         public async Task<string> CancelCustomerOrder(CustomerOrderModel customerOrder)
         {
-            return "sucess";
+            ApiResponseMessageModal? cancelRequestResponse = new ApiResponseMessageModal();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            if(customerOrder.OrderStatus == "Placed")
+            {
+                var jsonContent = JsonSerializer.Serialize<CustomerOrderModel>(customerOrder, options);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                // Tries to communicate with API and return suitable message.
+                try
+                {
+                    var uri = new Uri("http://" + _Address + "/order/changeOrderStatus/");
+                    var response = await _HttpClient.PutAsync(uri,content);
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    cancelRequestResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    return cancelRequestResponse.Message;
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
+            }
+            else
+            {
+                return $"The order is already {customerOrder.OrderStatus} and cannot be cancelled!";
+            }
         }
     }
 }
