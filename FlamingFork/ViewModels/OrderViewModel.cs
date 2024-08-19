@@ -74,6 +74,12 @@ namespace FlamingFork.ViewModels
             IsFetching = "False";
         }
 
+        [RelayCommand]
+        public async Task CancelSpecificCustomerOrder(string orderId)
+        {
+            Debug.WriteLine($"{orderId}");
+        }
+
         #endregion Methods
     }
 }

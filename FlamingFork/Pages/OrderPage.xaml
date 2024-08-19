@@ -110,15 +110,14 @@
             </HorizontalStackLayout>
             <!--#endregion-->
             <!--#region Order Content-->
-            <ScrollView Padding="20,0" Orientation="Vertical">
-                <CollectionView>
+            <ScrollView
+                Padding="20,0"
+                HeightRequest="550"
+                Orientation="Vertical">
+                <CollectionView ItemsSource="{Binding AllCustomerOrders}">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:CustomerOrderModel">
-                            <view:OrderItemView
-                                DeliveryAddress="{Binding CustomerAddress}"
-                                Items="{Binding StringifiedItems}"
-                                OrderStatus="{Binding OrderStatus}"
-                                TotalPrice="{Binding TotalPrice}" />
+                        <DataTemplate>
+                            <view:OrderItemView />
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
