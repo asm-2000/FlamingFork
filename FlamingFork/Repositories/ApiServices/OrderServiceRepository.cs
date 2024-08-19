@@ -78,14 +78,19 @@ namespace FlamingFork.Repositories.ApiServices
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
-            if(customerOrder.OrderStatus == "Placed")
+            // Fetches authentication token from secure storage.
+            string token = await SecureStorageHandler.GetAuthenticationToken();
+            _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            if (customerOrder.OrderStatus == "Placed")
             {
+                customerOrder.OrderStatus = "Cancelled";
                 var jsonContent = JsonSerializer.Serialize<CustomerOrderModel>(customerOrder, options);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 // Tries to communicate with API and return suitable message.
                 try
                 {
-                    var uri = new Uri("http://" + _Address + "/order/changeOrderStatus/");
+                    var uri = new Uri("http://" + _Address + "/order/changeOrderStatus");
                     var response = await _HttpClient.PutAsync(uri,content);
                     string responseBody = await response.Content.ReadAsStringAsync();
                     cancelRequestResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });

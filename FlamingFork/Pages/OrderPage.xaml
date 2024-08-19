@@ -31,6 +31,20 @@
     </Shell.TitleView>
     <!--#endregion-->
     <VerticalStackLayout Padding="20,10">
+        <Border
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding ResponseVisibility}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="{Binding CancelOrderResponse}"
+                TextColor="{StaticResource White}" />
+        </Border>
         <!--#region Loading indicator-->
         <ActivityIndicator
             BackgroundColor="{StaticResource Transparent}"

@@ -25,6 +25,12 @@ namespace FlamingFork.ViewModels
         [ObservableProperty]
         private string _OrdersPresent;
 
+        [ObservableProperty]
+        private string _CancelOrderResponse;
+
+        [ObservableProperty]
+        private string _ResponseVisibility;
+
         private OrderServiceRepository _OrderServices;
 
         #endregion Properties
@@ -37,6 +43,7 @@ namespace FlamingFork.ViewModels
             _HasFetched = "True";
             _OrdersNotPresent = "False";
             _OrdersPresent = "True";
+            _ResponseVisibility = "False";
             _OrderServices = new OrderServiceRepository();
             FetchCustomerOrders();
         }
@@ -77,7 +84,13 @@ namespace FlamingFork.ViewModels
         [RelayCommand]
         public async Task CancelSpecificCustomerOrder(string orderId)
         {
-            Debug.WriteLine($"{orderId}");
+            await FetchCustomerOrders();
+            CustomerOrderModel? specificOrder = AllCustomerOrders.Find(order => Convert.ToString(order.OrderId) == orderId);
+            CancelOrderResponse = await _OrderServices.CancelCustomerOrder(specificOrder);
+            ResponseVisibility = "True"; 
+            await FetchCustomerOrders();
+            await Task.Delay(500);
+            ResponseVisibility = "False";
         }
 
         #endregion Methods

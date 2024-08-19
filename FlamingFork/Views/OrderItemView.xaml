@@ -22,13 +22,15 @@
                 <Border
                     Padding="10,2"
                     HorizontalOptions="End"
-                    MaximumWidthRequest="200"
+                    MaximumWidthRequest="250"
                     Stroke="{AppThemeBinding Light={StaticResource Gray200},
                                              Dark={StaticResource Gold}}"
                     StrokeShape="RoundRectangle 10">
                     <Label
                         x:Name="OrderStatusLabel"
                         FontSize="12"
+                        HorizontalTextAlignment="Center"
+                        MinimumWidthRequest="100"
                         Text="{Binding OrderStatus, StringFormat='Status: {0}'}"
                         TextColor="{AppThemeBinding Light={StaticResource Gray600},
                                                     Dark={StaticResource Gray50}}" />
@@ -40,6 +42,12 @@
                             TargetType="Image"
                             Value="Status: Placed">
                             <Setter Property="Source" Value="order_placed_icon.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Image"
+                            Value="Status: Cancelled">
+                            <Setter Property="Source" Value="order_cancelled_icon.png" />
                         </DataTrigger>
                     </Image.Triggers>
                 </Image>
