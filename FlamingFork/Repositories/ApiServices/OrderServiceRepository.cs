@@ -13,12 +13,12 @@ namespace FlamingFork.Repositories.ApiServices
         public OrderServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "192.168.10.72:8080";
+            _Address = "10.10.100.242:8080";
         }
 
         public async Task<List<CustomerOrderModel>> GetCustomerOrders()
         {
-            List<CustomerOrderModel>? allCustomerOrders = new();
+            CustomerOrderResponseModel? customerOrderResponse = new();
             ApiResponseMessageModal? errorResponse = new ();
 
             CustomerModel currentCustomer = await SecureStorageHandler.GetCustomerDetails();
@@ -30,28 +30,28 @@ namespace FlamingFork.Repositories.ApiServices
                 string token = await SecureStorageHandler.GetAuthenticationToken();
                 _HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var uri = new Uri("http://" + _Address + "/orders/customerOrders/" + customerId);
+                var uri = new Uri("http://" + _Address + "/order/customerOrders/" + customerId);
                 var response = await _HttpClient.GetAsync(uri);
 
                 // Tries to deserialize the response to List<CustomerOrderModel> in case of sucessful fetch.
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    allCustomerOrders = JsonSerializer.Deserialize<List<CustomerOrderModel>>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    customerOrderResponse = JsonSerializer.Deserialize<CustomerOrderResponseModel>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     // Stringify the item details of order for usage in the content view.
-                    foreach(CustomerOrderModel customerOrder in allCustomerOrders)
+                    foreach(CustomerOrderModel customerOrder in customerOrderResponse.CustomerOrders)
                     {
                         string stringifiedItems = string.Empty;
                         int totalPrice = 0;
                         foreach(OrderItemModel orderItem in customerOrder.OrderItems)
                         {
                             totalPrice += orderItem.OrderItemPrice * orderItem.Quantity;
-                            stringifiedItems = orderItem.OrderItemName + "(" + orderItem.Quantity + ")" + " ";
+                            stringifiedItems += orderItem.OrderItemName + "(" + orderItem.Quantity + ")" + " ";
                         }
                         customerOrder.TotalPrice = totalPrice;
                         customerOrder.StringifiedItems = stringifiedItems;
                     }
-                    return allCustomerOrders;
+                    return customerOrderResponse.CustomerOrders;
                 }
                 // Deserializes the response to ApiResponseMessageModel in case of error status.
                 else
