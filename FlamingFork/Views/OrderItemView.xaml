@@ -7,7 +7,7 @@
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
     x:Name="this"
     x:DataType="model:CustomerOrderModel">
-    <VerticalStackLayout Margin="0,10">
+    <VerticalStackLayout Margin="5">
         <Border
             Padding="10"
             BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
@@ -33,7 +33,7 @@
                         TextColor="{AppThemeBinding Light={StaticResource Gray600},
                                                     Dark={StaticResource Gray50}}" />
                 </Border>
-                <Image Margin="20,30" HeightRequest="80">
+                <Image Margin="20" HeightRequest="80">
                     <Image.Triggers>
                         <DataTrigger
                             Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"

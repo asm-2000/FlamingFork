@@ -112,7 +112,7 @@
             <!--#region Order Content-->
             <ScrollView
                 Padding="20,0"
-                HeightRequest="550"
+                HeightRequest="520"
                 Orientation="Vertical">
                 <CollectionView ItemsSource="{Binding AllCustomerOrders}">
                     <CollectionView.ItemTemplate>
