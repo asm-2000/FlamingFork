@@ -43,8 +43,8 @@
                 </VerticalStackLayout>
             </Border>
             <BoxView
-                BackgroundColor="{StaticResource Gray400}"
-                HeightRequest="1"
+                BackgroundColor="{StaticResource Gray300}"
+                HeightRequest="2"
                 WidthRequest="250" />
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
@@ -57,12 +57,12 @@
             Icon="menu_icon.png"
             Route="MainPage" />
         <ShellContent
-            Title="My Cart"
+            Title="Your Cart"
             ContentTemplate="{DataTemplate page:CartPage}"
             Icon="cart_logo.png"
             Route="CartPage" />
         <ShellContent
-            Title="My Orders"
+            Title="Orders"
             ContentTemplate="{DataTemplate page:OrderPage}"
             Icon="order_logo.png"
             Route="OrderPage" />
@@ -77,8 +77,8 @@
             Spacing="30"
             WidthRequest="250">
             <BoxView
-                BackgroundColor="{StaticResource Gray400}"
-                HeightRequest="1"
+                BackgroundColor="{StaticResource Gray300}"
+                HeightRequest="2"
                 WidthRequest="250" />
             <Border
                 Padding="10"
@@ -120,7 +120,7 @@
                     HeightRequest="40"
                     HorizontalTextAlignment="Start"
                     Text="{Binding Title}"
-                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                    TextColor="{AppThemeBinding Light={StaticResource PrimaryDark},
                                                 Dark={StaticResource Gray200}}"
                     VerticalTextAlignment="Center" />
             </Grid>
