@@ -206,7 +206,7 @@ namespace FlamingFork.Repositories.ApiServices
             //Extract current time.
             DateTime currentDate = DateTime.Now;
             //Convert the current date to suitable string format.
-            string orderDate = $"{currentDate.Date.ToShortDateString()} {currentDate.Hour}:{currentDate.Minute}";
+            string orderDate = $"{currentDate.Date:yyyy/MM/dd} {currentDate.Hour}:{currentDate.Minute}";
             CustomerOrderModel customerOrder = new(customerId, customerContact, customerCurrentAddress, "Placed", orderItems, orderDate);
             // Json serialization.
             var options = new JsonSerializerOptions
