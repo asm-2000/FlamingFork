@@ -87,11 +87,27 @@ namespace FlamingFork.ViewModels
             await FetchCustomerOrders();
             CustomerOrderModel? specificOrder = AllCustomerOrders.Find(order => Convert.ToString(order.OrderId) == orderId);
             CancelOrderResponse = await _OrderServices.CancelCustomerOrder(specificOrder);
-            ResponseVisibility = "True"; 
-            await FetchCustomerOrders();
+            ResponseVisibility = "True";
+            if(ConvertToBool(CancelOrderResponse))
+            {
+                ChangeOrderStatus(orderId);
+            }
             await Task.Delay(500);
             ResponseVisibility = "False";
         }
+
+        public void ChangeOrderStatus(string orderId)
+        { 
+            foreach(CustomerOrderModel customerOrder in AllCustomerOrders)
+            {
+                if(orderId == Convert.ToString(customerOrder.CustomerId))
+                {
+                    customerOrder.OrderStatus = "Cancelled";
+                }
+            }
+        }
+
+        public bool ConvertToBool(string response) => response == "Status updated sucessfully!";
 
         #endregion Methods
     }
