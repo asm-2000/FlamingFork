@@ -13,7 +13,10 @@
     Shell.TabBarIsVisible="False">
     <!--#region Flyout Header-->
     <Shell.FlyoutHeader>
-        <VerticalStackLayout Padding="20,20,20,10">
+        <VerticalStackLayout
+            Margin="0,10"
+            Padding="20"
+            Spacing="40">
             <Border
                 Margin="10"
                 Padding="20"
@@ -68,16 +71,17 @@
     <!--#region Flyout Footer-->
     <Shell.FlyoutFooter>
         <VerticalStackLayout
+            Margin="0,20,0,30"
             Padding="20,10"
             x:DataType="viewmodel:AppShellViewModel"
-            Spacing="20"
+            Spacing="30"
             WidthRequest="250">
             <BoxView
                 BackgroundColor="{StaticResource Gray400}"
                 HeightRequest="1"
                 WidthRequest="250" />
             <Border
-                Padding="5"
+                Padding="10"
                 StrokeShape="RoundRectangle 10"
                 WidthRequest="150">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
