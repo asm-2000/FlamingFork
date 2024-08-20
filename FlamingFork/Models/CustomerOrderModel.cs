@@ -12,16 +12,19 @@ namespace FlamingFork.Models
         public string? StringifiedItems {  get; set; } 
         public int TotalPrice { get; set; }
 
+        public string OrderDate { get; set; }
+
         [ObservableProperty]
         public string? _orderStatus = "Placed";
 
-        public CustomerOrderModel(int customerId, string customerContact, string customerAddress, string orderStatus, List<OrderItemModel> orderItems)
+        public CustomerOrderModel(int customerId, string customerContact, string customerAddress, string orderStatus, List<OrderItemModel> orderItems, string orderDate)
         {
             CustomerId = customerId;
             CustomerContact = customerContact;
             CustomerAddress = customerAddress;
             OrderStatus = orderStatus;
             OrderItems = orderItems;
+            OrderDate = orderDate;
         }
     }
 }

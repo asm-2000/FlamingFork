@@ -203,7 +203,11 @@ namespace FlamingFork.Repositories.ApiServices
                 OrderItemModel orderItem = new(cartItem.CartItemName, cartItem.CartItemPrice, cartItem.Quantity);
                 orderItems.Add(orderItem);
             }
-            CustomerOrderModel customerOrder = new(customerId, customerContact, customerCurrentAddress, "Placed", orderItems);
+            //Extract current time.
+            DateTime currentDate = DateTime.Now;
+            //Convert the current date to suitable string format.
+            string orderDate = $"{currentDate.Date.ToShortDateString()} {currentDate.Hour}:{currentDate.Minute}";
+            CustomerOrderModel customerOrder = new(customerId, customerContact, customerCurrentAddress, "Placed", orderItems, orderDate);
             // Json serialization.
             var options = new JsonSerializerOptions
             {
