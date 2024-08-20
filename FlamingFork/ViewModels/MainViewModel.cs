@@ -94,8 +94,8 @@ namespace FlamingFork.ViewModels
             IsFetching = "True";
             while (MenuItems.Count == 0)
             {
-                await Task.Delay(3000);
                 MenuItems = await _MenuItemFetchService.GetMenuItems();
+                await Task.Delay(3000);
             }
             SegregateMenuItems();
             IsFetching = "False";
