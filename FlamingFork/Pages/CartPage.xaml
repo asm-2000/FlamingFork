@@ -6,7 +6,7 @@
     xmlns:model="clr-namespace:FlamingFork.Models"
     xmlns:view="clr-namespace:FlamingFork.Views"
     xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
-    Title="My Cart"
+    Title="Your Cart"
     x:DataType="viewmodel:CartViewModel">
     <!--#region NavBar Contents-->
     <Shell.TitleView>
