@@ -53,12 +53,6 @@ namespace FlamingFork.ViewModels
         #region Methods
 
         [RelayCommand]
-        public void ChangeOrderVisibilityByType()
-        {
-            Debug.WriteLine("Command Called!");
-        }
-
-        [RelayCommand]
         public async Task FetchCustomerOrders()
         {
             // Shows activity indicator while the app is fetching the customer orders.

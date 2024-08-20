@@ -100,29 +100,6 @@
                 </Border>
             </VerticalStackLayout>
             <!--#endregion-->
-            <!--#region Order Visibility Switch-->
-            <HorizontalStackLayout
-                Margin="0"
-                HorizontalOptions="End"
-                IsVisible="{Binding OrdersPresent}"
-                Spacing="10">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="18"
-                    Text="Show All: "
-                    TextColor="{AppThemeBinding Light={StaticResource Gray400},
-                                                Dark={StaticResource Gray300}}"
-                    VerticalOptions="Center" />
-                <Switch x:Name="ShowAllOrderSwitch" VerticalOptions="Center">
-                    <Switch.Behaviors>
-                        <toolkit:EventToCommandBehavior
-                            Command="{Binding ChangeOrderVisibilityByTypeCommand}"
-                            CommandParameter="{Binding Source={Reference ShowAllOrderSwitch}, Path=IsToggled}"
-                            EventName="Toggled" />
-                    </Switch.Behaviors>
-                </Switch>
-            </HorizontalStackLayout>
-            <!--#endregion-->
             <!--#region Order Content-->
             <ScrollView
                 Padding="20,0"
