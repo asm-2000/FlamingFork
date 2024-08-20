@@ -49,6 +49,18 @@
                             Value="Status: Cancelled">
                             <Setter Property="Source" Value="order_cancelled_icon.png" />
                         </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Image"
+                            Value="Status: Being Delivered">
+                            <Setter Property="Source" Value="order_being_delivered_icon.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Image"
+                            Value="Status: Delivered">
+                            <Setter Property="Source" Value="order_delivered_icon.png" />
+                        </DataTrigger>
                     </Image.Triggers>
                 </Image>
                 <Border
@@ -98,6 +110,41 @@
                         </Button.Triggers>
                     </Button>
                 </Grid>
+                <ProgressBar ProgressColor="{StaticResource ProgressGreen}">
+                    <ProgressBar.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="ProgressBar"
+                            Value="Status: Placed">
+                            <Setter Property="Progress" Value="0.25" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="ProgressBar"
+                            Value="Status: Being Prepared">
+                            <Setter Property="Progress" Value="0.5" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="ProgressBar"
+                            Value="Status: Being Delivered">
+                            <Setter Property="Progress" Value="0.75" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="ProgressBar"
+                            Value="Status: Delivered">
+                            <Setter Property="Progress" Value="1" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="ProgressBar"
+                            Value="Status: Cancelled">
+                            <Setter Property="Progress" Value="1" />
+                            <Setter Property="ProgressColor" Value="{StaticResource PrimaryDark}" />
+                        </DataTrigger>
+                    </ProgressBar.Triggers>
+                </ProgressBar>
             </VerticalStackLayout>
         </Border>
     </VerticalStackLayout>
