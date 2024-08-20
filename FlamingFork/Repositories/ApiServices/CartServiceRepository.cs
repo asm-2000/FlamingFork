@@ -15,7 +15,7 @@ namespace FlamingFork.Repositories.ApiServices
         public CartServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "192.168.10.72:8080";
+            _Address = "10.10.100.242:8080";
         }
 
         #region Item Adder
@@ -66,7 +66,7 @@ namespace FlamingFork.Repositories.ApiServices
         public async Task<List<CartItemModel>> GetAllCartItems()
         {
             CartItemsModel? fetchedCartItems = new();
-            ApiResponseMessageModal? ErrorResponse = new();
+            ApiResponseMessageModal? errorResponse = new();
             var options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -95,7 +95,7 @@ namespace FlamingFork.Repositories.ApiServices
                 else
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    ErrorResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    errorResponse = JsonSerializer.Deserialize<ApiResponseMessageModal>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     return [];
                 }
             }
@@ -203,7 +203,11 @@ namespace FlamingFork.Repositories.ApiServices
                 OrderItemModel orderItem = new(cartItem.CartItemName, cartItem.CartItemPrice, cartItem.Quantity);
                 orderItems.Add(orderItem);
             }
-            CustomerOrderModel customerOrder = new(customerId, customerContact, customerCurrentAddress, "Placed", orderItems);
+            //Extract current time.
+            DateTime currentDate = DateTime.Now;
+            //Convert the current date to suitable string format.
+            string orderDate = $"{currentDate.Date:yyyy/MM/dd} {currentDate.Hour}:{currentDate.Minute}";
+            CustomerOrderModel customerOrder = new(customerId, customerContact, customerCurrentAddress, "Placed", orderItems, orderDate);
             // Json serialization.
             var options = new JsonSerializerOptions
             {

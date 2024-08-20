@@ -21,6 +21,7 @@
     <Color x:Key="Transparent">transparent</Color>
     <Color x:Key="LinkBlue">#3A9BDC</Color>
     <Color x:Key="Gold">#FFD700</Color>
+    <Color x:Key="ProgressGreen">#63f542</Color>
 
     <Color x:Key="Gray50">#F5F5F5</Color>
     <Color x:Key="Gray100">#E1E1E1</Color>

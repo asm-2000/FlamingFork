@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FlamingFork.Pages.OrderPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:FlamingFork.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:view="clr-namespace:FlamingFork.Views"
+    xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
+    Title="My Orders"
+    x:DataType="viewmodel:OrderViewModel">
+    <!--#region NavBar Contents-->
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="0.7*,0.3*">
+            <Label
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=Title}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                            Dark={StaticResource PrimaryDarkText}}"
+                VerticalTextAlignment="Center" />
+            <Image
+                Grid.Column="1"
+                AbsoluteLayout.LayoutBounds="0.9,0"
+                HeightRequest="25"
+                Source="order_logo.png"
+                WidthRequest="25" />
+        </Grid>
+    </Shell.TitleView>
+    <!--#endregion-->
+    <VerticalStackLayout Padding="20,10">
+        <Border
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding ResponseVisibility}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="{Binding CancelOrderResponse}"
+                TextColor="{StaticResource White}" />
+        </Border>
+        <!--#region Loading indicator-->
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsFetching}"
+            IsVisible="{Binding IsFetching}"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <!--#endregion-->
+        <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <!--#region No Order UI-->
+            <VerticalStackLayout Margin="0,100" IsVisible="{Binding OrdersNotPresent}">
+                <Image
+                    HeightRequest="150"
+                    Source="no_orders_icon.png"
+                    WidthRequest="150" />
+                <Label
+                    Margin="0,20"
+                    FontSize="25"
+                    HorizontalOptions="Center"
+                    Text="No orders to show..  :( "
+                    TextColor="{StaticResource Gray300}" />
+            </VerticalStackLayout>
+            <!--#endregion-->
+            <!--#region Title-->
+            <VerticalStackLayout IsVisible="{Binding OrdersPresent}">
+                <Border
+                    Padding="10"
+                    Stroke="{AppThemeBinding Light={StaticResource Gold},
+                                             Dark={StaticResource Primary}}"
+                    StrokeShape="RoundRectangle 20"
+                    StrokeThickness="3">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="Start"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                    Dark={StaticResource Gray300}}"
+                        VerticalOptions="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span
+                                    FontSize="25"
+                                    Text="Your "
+                                    TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                                Dark={StaticResource Gold}}" />
+                                <Span Text="orders:" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Border>
+            </VerticalStackLayout>
+            <!--#endregion-->
+            <!--#region Order Content-->
+            <ScrollView
+                Padding="20,0"
+                HeightRequest="520"
+                Orientation="Vertical">
+                <CollectionView ItemsSource="{Binding AllCustomerOrders}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <view:OrderItemView />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
+            <!--#endregion-->
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>
