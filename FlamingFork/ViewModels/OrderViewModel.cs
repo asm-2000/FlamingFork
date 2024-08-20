@@ -65,6 +65,7 @@ namespace FlamingFork.ViewModels
             IsFetching = "True";
             HasFetched = "False";
             AllCustomerOrders = await _OrderServices.GetCustomerOrders();
+            AllCustomerOrders =  AllCustomerOrders.OrderByDescending(order => order.OrderDate).ToList();
             // Check for empty order list and show proper UI.
             if(AllCustomerOrders.Count == 0)
             {
