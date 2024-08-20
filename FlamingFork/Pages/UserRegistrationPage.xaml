@@ -8,8 +8,8 @@
     Title="UserRegistrationPage"
     x:DataType="viewmodel:UserRegistrationViewModel">
     <ScrollView>
-        <VerticalStackLayout Padding="30,60,30,0">
-            <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" StrokeThickness="3">
+        <VerticalStackLayout Padding="30">
+            <Border BackgroundColor="{StaticResource PrimaryDark}" Stroke="{StaticResource Transparent}">
                 <Border.StrokeShape>
                     <RoundRectangle CornerRadius="40,0,0,40" />
                 </Border.StrokeShape>
@@ -18,9 +18,8 @@
                     FontAttributes="Bold"
                     FontSize="30"
                     HorizontalTextAlignment="Center"
-                    Text="Register Account"
-                    TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                Dark={StaticResource PrimaryDarkText}}" />
+                    Text="Create An Account"
+                    TextColor="{StaticResource PrimaryDarkText}" />
             </Border>
             <Image
                 Margin="0,30"
@@ -29,7 +28,7 @@
                 WidthRequest="70" />
             <!--#region Input Fields-->
             <Label
-                Margin="0,20,0,5"
+                Margin="0,5"
                 FontAttributes="Bold"
                 FontSize="16"
                 Text="Full Name:" />
