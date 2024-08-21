@@ -57,7 +57,7 @@
             WidthRequest="25"
             Color="{AppThemeBinding Light={StaticResource Gray400},
                                     Dark={StaticResource Gray200}}" />
-        <ScrollView HeightRequest="700">
+        <ScrollView HeightRequest="760">
             <VerticalStackLayout>
                 <VerticalStackLayout
                     Padding="20"

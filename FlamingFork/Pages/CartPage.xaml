@@ -121,7 +121,7 @@
         <!--#region Cart Content-->
         <ScrollView
             Padding="10,0"
-            HeightRequest="400"
+            HeightRequest="440"
             IsVisible="{Binding HasFetched}"
             Orientation="Vertical">
             <CollectionView ItemsSource="{Binding CartItems}">

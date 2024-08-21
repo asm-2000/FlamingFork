@@ -11,7 +11,7 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False" />
     </Shell.BackButtonBehavior>
-    <VerticalStackLayout Padding="30,30">
+    <VerticalStackLayout Margin="0,40" Padding="30">
         <Border Stroke="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" StrokeThickness="3">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="40,0,0,40" />
