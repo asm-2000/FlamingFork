@@ -71,7 +71,6 @@ namespace FlamingFork.ViewModels
             {
                 IsSigningIn = true;
                 CustomerLoginModel customerCredentials = new CustomerLoginModel(Email,Password);
-                Debug.WriteLine(customerCredentials.Email);
                 SignInMessage = await _AuthService.LoginCustomer(customerCredentials);
                 string token = await SecureStorageHandler.GetAuthenticationToken();
                 IsSigningIn = false;

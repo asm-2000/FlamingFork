@@ -14,7 +14,7 @@ namespace FlamingFork.Repositories.ApiServices
         public AuthenticationServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "10.10.100.242:8080";
+            _Address = "10.10.100.53:8080";
         }
 
         #region SignUp Handler API Service

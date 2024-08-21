@@ -13,7 +13,10 @@
     Shell.TabBarIsVisible="False">
     <!--#region Flyout Header-->
     <Shell.FlyoutHeader>
-        <VerticalStackLayout Padding="20,20,20,10">
+        <VerticalStackLayout
+            Margin="0,10"
+            Padding="20"
+            Spacing="40">
             <Border
                 Margin="10"
                 Padding="20"
@@ -40,8 +43,8 @@
                 </VerticalStackLayout>
             </Border>
             <BoxView
-                BackgroundColor="{StaticResource Gray400}"
-                HeightRequest="1"
+                BackgroundColor="{StaticResource Gray300}"
+                HeightRequest="2"
                 WidthRequest="250" />
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
@@ -54,12 +57,12 @@
             Icon="menu_icon.png"
             Route="MainPage" />
         <ShellContent
-            Title="My Cart"
+            Title="Your Cart"
             ContentTemplate="{DataTemplate page:CartPage}"
             Icon="cart_logo.png"
             Route="CartPage" />
         <ShellContent
-            Title="My Orders"
+            Title="Orders"
             ContentTemplate="{DataTemplate page:OrderPage}"
             Icon="order_logo.png"
             Route="OrderPage" />
@@ -68,16 +71,17 @@
     <!--#region Flyout Footer-->
     <Shell.FlyoutFooter>
         <VerticalStackLayout
+            Margin="0,20,0,30"
             Padding="20,10"
             x:DataType="viewmodel:AppShellViewModel"
-            Spacing="20"
+            Spacing="30"
             WidthRequest="250">
             <BoxView
-                BackgroundColor="{StaticResource Gray400}"
-                HeightRequest="1"
+                BackgroundColor="{StaticResource Gray300}"
+                HeightRequest="2"
                 WidthRequest="250" />
             <Border
-                Padding="5"
+                Padding="10"
                 StrokeShape="RoundRectangle 10"
                 WidthRequest="150">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
@@ -116,7 +120,7 @@
                     HeightRequest="40"
                     HorizontalTextAlignment="Start"
                     Text="{Binding Title}"
-                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                    TextColor="{AppThemeBinding Light={StaticResource PrimaryDark},
                                                 Dark={StaticResource Gray200}}"
                     VerticalTextAlignment="Center" />
             </Grid>

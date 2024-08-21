@@ -79,7 +79,7 @@ namespace FlamingFork.ViewModels
         public async void CheckLoginStatus()
         {
             string? token = await SecureStorageHandler.GetAuthenticationToken();
-            Action navigationAction = token == "Not Found" ? (() => { _Navigation.PushAsync(new UserLoginPage()); }) : (async () =>
+            Action navigationAction = token == "Not Found" ? (async() => {await _Navigation.PushAsync(new UserLoginPage()); }) : (async () =>
             {
                 // Fetch customerId from secure storage.
                 CustomerModel customerDetails = await SecureStorageHandler.GetCustomerDetails();
@@ -94,8 +94,8 @@ namespace FlamingFork.ViewModels
             IsFetching = "True";
             while (MenuItems.Count == 0)
             {
-                await Task.Delay(3000);
                 MenuItems = await _MenuItemFetchService.GetMenuItems();
+                await Task.Delay(1000);
             }
             SegregateMenuItems();
             IsFetching = "False";

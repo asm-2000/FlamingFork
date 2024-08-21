@@ -33,258 +33,260 @@
         </Grid>
     </Shell.TitleView>
     <!--#endregion-->
-    <ScrollView>
-        <VerticalStackLayout>
-            <Border
-                Margin="5,5"
-                Padding="5"
-                BackgroundColor="{StaticResource Primary}"
-                HorizontalOptions="Center"
-                IsVisible="{Binding CartMessageVisibility}"
-                Stroke="{StaticResource Transparent}"
-                StrokeShape="RoundRectangle 10">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="12"
-                    Text="{Binding CartMessage}"
-                    TextColor="{StaticResource White}" />
-            </Border>
-            <ActivityIndicator
-                BackgroundColor="{StaticResource Transparent}"
-                HeightRequest="25"
-                HorizontalOptions="Center"
-                IsRunning="{Binding IsFetching}"
-                IsVisible="{Binding IsFetching}"
-                WidthRequest="25"
-                Color="{AppThemeBinding Light={StaticResource Gray400},
-                                        Dark={StaticResource Gray200}}" />
-            <VerticalStackLayout
-                Padding="20"
-                IsVisible="{Binding HasLoaded}"
-                Spacing="5">
-                <!--#region Category Title Momo-->
-                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
-                    <BoxView
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                    <Label
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalTextAlignment="Center"
-                        Text="Momo"
-                        TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                    Dark={StaticResource Gold}}" />
-                    <BoxView
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                </Grid>
-                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
-                    <ScrollView
-                        Padding="10,20"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Orientation="Horizontal">
-                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding MomoItems}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <view:MenuItemView />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </ScrollView>
-                </Border>
-                <!--#endregion-->
-                <!--#region Category Title Noodles-->
-                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
-                    <BoxView
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                    <Label
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalTextAlignment="Center"
-                        Text="Noodles"
-                        TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                    Dark={StaticResource Gold}}" />
-                    <BoxView
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                </Grid>
-                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
-                    <ScrollView
-                        Padding="10,20"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Orientation="Horizontal">
-                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding NoodleItems}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:MenuItemModel">
-                                    <view:MenuItemView />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </ScrollView>
-                </Border>
-                <!--#endregion-->
-                <!--#region Category Title Sandwiches-->
-                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
-                    <BoxView
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                    <Label
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalTextAlignment="Center"
-                        Text="Burgers/Sandwiches"
-                        TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                    Dark={StaticResource Gold}}" />
-                    <BoxView
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                </Grid>
-                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
-                    <ScrollView
-                        Padding="10,20"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Orientation="Horizontal">
-                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding SandwichItems}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:MenuItemModel">
-                                    <view:MenuItemView />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </ScrollView>
-                </Border>
-                <!--#endregion-->
-                <!--#region Category Title Snacks-->
-                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
-                    <BoxView
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                    <Label
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalTextAlignment="Center"
-                        Text="Snacks"
-                        TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                    Dark={StaticResource Gold}}" />
-                    <BoxView
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                </Grid>
-                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
-                    <ScrollView
-                        Padding="10,20"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Orientation="Horizontal">
-                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding SnackItems}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:MenuItemModel">
-                                    <view:MenuItemView />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </ScrollView>
-                </Border>
-                <!--#endregion-->
-                <!--#region Category Title BreakFast-->
-                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
-                    <BoxView
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                    <Label
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalTextAlignment="Center"
-                        Text="Breakfast"
-                        TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                    Dark={StaticResource Gold}}" />
-                    <BoxView
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                </Grid>
-                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
-                    <ScrollView
-                        Padding="10,20"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Orientation="Horizontal">
-                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding BreakfastItems}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:MenuItemModel">
-                                    <view:MenuItemView />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </ScrollView>
-                </Border>
-                <!--#endregion-->
-                <!--#region Category Title Drinks-->
-                <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
-                    <BoxView
-                        Grid.Column="0"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                    <Label
-                        Grid.Column="1"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalTextAlignment="Center"
-                        Text="Soft Drinks"
-                        TextColor="{AppThemeBinding Light={StaticResource Primary},
-                                                    Dark={StaticResource Gold}}" />
-                    <BoxView
-                        Grid.Column="2"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
-                                                          Dark={StaticResource Primary}}"
-                        HeightRequest="2" />
-                </Grid>
-                <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
-                    <ScrollView
-                        Padding="10,20"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
-                                                          Dark={StaticResource Black}}"
-                        Orientation="Horizontal">
-                        <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding DrinkItems}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:MenuItemModel">
-                                    <view:MenuItemView />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </ScrollView>
-                </Border>
-                <!--#endregion-->
+    <VerticalStackLayout>
+        <Border
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CartMessageVisibility}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="{Binding CartMessage}"
+                TextColor="{StaticResource White}" />
+        </Border>
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="25"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsFetching}"
+            IsVisible="{Binding IsFetching}"
+            WidthRequest="25"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <ScrollView HeightRequest="760">
+            <VerticalStackLayout>
+                <VerticalStackLayout
+                    Padding="20"
+                    IsVisible="{Binding HasLoaded}"
+                    Spacing="5">
+                    <!--#region Category Title Momo-->
+                    <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                        <BoxView
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Momo"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                        Dark={StaticResource Gold}}" />
+                        <BoxView
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                    </Grid>
+                    <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                        <ScrollView
+                            Padding="10,20"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                              Dark={StaticResource Black}}"
+                            Orientation="Horizontal">
+                            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding MomoItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <view:MenuItemView />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region Category Title Noodles-->
+                    <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                        <BoxView
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Noodles"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                        Dark={StaticResource Gold}}" />
+                        <BoxView
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                    </Grid>
+                    <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                        <ScrollView
+                            Padding="10,20"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                              Dark={StaticResource Black}}"
+                            Orientation="Horizontal">
+                            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding NoodleItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:MenuItemModel">
+                                        <view:MenuItemView />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region Category Title Sandwiches-->
+                    <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                        <BoxView
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Burgers/Sandwiches"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                        Dark={StaticResource Gold}}" />
+                        <BoxView
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                    </Grid>
+                    <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                        <ScrollView
+                            Padding="10,20"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                              Dark={StaticResource Black}}"
+                            Orientation="Horizontal">
+                            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding SandwichItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:MenuItemModel">
+                                        <view:MenuItemView />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region Category Title Snacks-->
+                    <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                        <BoxView
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Snacks"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                        Dark={StaticResource Gold}}" />
+                        <BoxView
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                    </Grid>
+                    <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                        <ScrollView
+                            Padding="10,20"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                              Dark={StaticResource Black}}"
+                            Orientation="Horizontal">
+                            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding SnackItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:MenuItemModel">
+                                        <view:MenuItemView />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region Category Title BreakFast-->
+                    <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                        <BoxView
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Breakfast"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                        Dark={StaticResource Gold}}" />
+                        <BoxView
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                    </Grid>
+                    <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                        <ScrollView
+                            Padding="10,20"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                              Dark={StaticResource Black}}"
+                            Orientation="Horizontal">
+                            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding BreakfastItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:MenuItemModel">
+                                        <view:MenuItemView />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+                    </Border>
+                    <!--#endregion-->
+                    <!--#region Category Title Drinks-->
+                    <Grid ColumnDefinitions="0.3*,0.4*,0.3*">
+                        <BoxView
+                            Grid.Column="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalTextAlignment="Center"
+                            Text="Soft Drinks"
+                            TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                        Dark={StaticResource Gold}}" />
+                        <BoxView
+                            Grid.Column="2"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gold},
+                                                              Dark={StaticResource Primary}}"
+                            HeightRequest="2" />
+                    </Grid>
+                    <Border Stroke="{StaticResource Transparent}" StrokeShape="RoundRectangle 10">
+                        <ScrollView
+                            Padding="10,20"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                                              Dark={StaticResource Black}}"
+                            Orientation="Horizontal">
+                            <CollectionView ItemsLayout="HorizontalList" ItemsSource="{Binding DrinkItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:MenuItemModel">
+                                        <view:MenuItemView />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </ScrollView>
+                    </Border>
+                    <!--#endregion-->
+                </VerticalStackLayout>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>
