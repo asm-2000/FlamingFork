@@ -100,7 +100,7 @@
                                     Dark={StaticResource Gray200}}" />
         <!--#region Empty Cart UI-->
         <VerticalStackLayout
-            Margin="0,150"
+            Margin="0,180"
             Padding="20"
             HorizontalOptions="Center"
             IsVisible="{Binding CartIsEmpty}"

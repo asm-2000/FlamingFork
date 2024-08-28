@@ -33,22 +33,26 @@
         </Grid>
     </Shell.TitleView>
     <!--#endregion-->
-    <VerticalStackLayout>
-        <Border
-            Margin="5,5"
-            Padding="5"
-            BackgroundColor="{StaticResource Primary}"
-            HorizontalOptions="Center"
-            IsVisible="{Binding CartMessageVisibility}"
-            Stroke="{StaticResource Transparent}"
-            StrokeShape="RoundRectangle 10">
-            <Label
-                FontAttributes="Bold"
-                FontSize="12"
-                Text="{Binding CartMessage}"
-                TextColor="{StaticResource White}" />
-        </Border>
+    <Grid RowDefinitions="auto,auto,1*">
+        <AbsoluteLayout Grid.Row="0" HorizontalOptions="Center">
+            <Border
+                Margin="5,5"
+                Padding="5"
+                AbsoluteLayout.LayoutBounds="0,0.5"
+                BackgroundColor="{StaticResource Primary}"
+                HorizontalOptions="Center"
+                IsVisible="{Binding CartMessageVisibility}"
+                Stroke="{StaticResource Transparent}"
+                StrokeShape="RoundRectangle 10">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    Text="{Binding CartMessage}"
+                    TextColor="{StaticResource White}" />
+            </Border>
+        </AbsoluteLayout>
         <ActivityIndicator
+            Grid.Row="1"
             BackgroundColor="{StaticResource Transparent}"
             HeightRequest="25"
             HorizontalOptions="Center"
@@ -57,7 +61,7 @@
             WidthRequest="25"
             Color="{AppThemeBinding Light={StaticResource Gray400},
                                     Dark={StaticResource Gray200}}" />
-        <ScrollView HeightRequest="760">
+        <ScrollView Grid.Row="2">
             <VerticalStackLayout>
                 <VerticalStackLayout
                     Padding="20"
@@ -288,5 +292,5 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
