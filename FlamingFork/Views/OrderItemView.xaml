@@ -52,6 +52,12 @@
                         <DataTrigger
                             Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
                             TargetType="Image"
+                            Value="Status: Being Prepared">
+                            <Setter Property="Source" Value="order_being_prepared_icon.png" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding Source={Reference OrderStatusLabel}, Path=Text}"
+                            TargetType="Image"
                             Value="Status: Being Delivered">
                             <Setter Property="Source" Value="order_being_delivered_icon.png" />
                         </DataTrigger>
