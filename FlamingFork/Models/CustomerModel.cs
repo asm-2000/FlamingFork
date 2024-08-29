@@ -18,5 +18,15 @@
             Address = address;
             Contact = contact;
         }
+
+        public CustomerModel(int? customerId, string customerName, string address, string contact)
+        {
+            CustomerID = customerId;
+            CustomerName = customerName;
+            Address = address;
+            Contact = contact;
+        }
+
+        public CustomerModel() { }
     }
 }

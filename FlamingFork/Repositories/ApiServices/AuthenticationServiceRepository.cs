@@ -14,7 +14,7 @@ namespace FlamingFork.Repositories.ApiServices
         public AuthenticationServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "10.10.100.56:8080";
+            _Address = "192.168.10.75:8080";
         }
 
         #region SignUp Handler API Service
@@ -90,5 +90,44 @@ namespace FlamingFork.Repositories.ApiServices
         }
 
         #endregion Login Handler API Service
+
+        #region Details Update Handler API Service
+        public async Task<string> UpdateCustomerDetails(CustomerModel updatedDetails)
+        {
+            CustomerDetailsUpdateResponseModel? updateResponse = new CustomerDetailsUpdateResponseModel();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var jsonContent = JsonSerializer.Serialize<CustomerModel>(updatedDetails, options);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            // Commmnicates with API and returns received message.
+            try
+            {
+                var uri = new Uri("http://" + _Address + "/user/updateCustomerDetails");
+                var response = await _HttpClient.PutAsync(uri, content);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                // Deserializes response into CustomerDetailsUpdateResponseModel.
+                updateResponse = JsonSerializer.Deserialize<CustomerDetailsUpdateResponseModel>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (response.IsSuccessStatusCode)
+                {
+                    string customerDetails = JsonSerializer.Serialize(updateResponse.CustomerDetails);
+                    SecureStorage.Remove("CustomerDetails");
+                    await SecureStorage.SetAsync("CustomerDetails", customerDetails);
+                    return updateResponse.Message;
+                }   
+                else
+                {
+                    return updateResponse.Message;
+                }
+            }
+            // Returns exception message if communication with API fails.
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+        #endregion
     }
 }
