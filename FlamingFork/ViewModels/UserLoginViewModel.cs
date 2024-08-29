@@ -47,6 +47,16 @@ namespace FlamingFork.ViewModels
             _EmailError = "";
             _PasswordError = "";
             _SignInMessage = "";
+            CheckInternetConnection();
+        }
+
+        public async Task CheckInternetConnection()
+        {
+            NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
+            if(networkAccess != NetworkAccess.Internet)
+            {
+                await _Navigation.PushAsync(new InternetConnectionErrorPage());
+            }
         }
 
         #region Validation Methods
@@ -73,11 +83,11 @@ namespace FlamingFork.ViewModels
                 CustomerLoginModel customerCredentials = new CustomerLoginModel(Email,Password);
                 SignInMessage = await _AuthService.LoginCustomer(customerCredentials);
                 string token = await SecureStorageHandler.GetAuthenticationToken();
-                IsSigningIn = false;
                 if (token != "Not Found")
                 {
                     await _Navigation.PopAsync();
-                }     
+                }
+                IsSigningIn = false;
             }
         }
 

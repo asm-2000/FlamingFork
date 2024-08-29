@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FlamingFork.Helper.Constants;
 using FlamingFork.Helper.Utilities;
 using FlamingFork.Models;
 using FlamingFork.Pages;
@@ -76,10 +77,10 @@ namespace FlamingFork.ViewModels
         #region Methods
 
         // Checks if the user has previously logged in or not and navigates accordingly
-        public async void CheckLoginStatus()
+        public async Task CheckLoginStatus()
         {
             string? token = await SecureStorageHandler.GetAuthenticationToken();
-            Action navigationAction = token == "Not Found" ? (async() => {await _Navigation.PushAsync(new UserLoginPage()); }) : (async () =>
+            Action navigationAction = token == "Not Found" ? (async () => { await _Navigation.PushAsync(new UserLoginPage()); }) : (async () =>
             {
                 // Fetch customerId from secure storage.
                 CustomerModel customerDetails = await SecureStorageHandler.GetCustomerDetails();
@@ -90,14 +91,23 @@ namespace FlamingFork.ViewModels
 
         public async void FetchMenuData()
         {
+            // Checks for internet connection before hand.
+            NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
+            if (networkAccess != NetworkAccess.Internet)
+            {
+                await _Navigation.PushAsync(new InternetConnectionErrorPage());
+            }
             HasLoaded = "False";
             IsFetching = "True";
             while (MenuItems.Count == 0)
             {
-                MenuItems = await _MenuItemFetchService.GetMenuItems();
-                await Task.Delay(1000);
+                string? token = await SecureStorageHandler.GetAuthenticationToken();
+                if (token != "Not Found")
+                {
+                    MenuItems = await _MenuItemFetchService.GetMenuItems();
+                    SegregateMenuItems();
+                }
             }
-            SegregateMenuItems();
             IsFetching = "False";
             HasLoaded = "True";
         }
@@ -106,29 +116,28 @@ namespace FlamingFork.ViewModels
         {
             foreach (MenuItemModel menuItem in MenuItems)
             {
-                if (menuItem.ItemCategory == "Snacks")
+                switch (menuItem.ItemCategory)
                 {
-                    SnackItems.Add(menuItem);
-                }
-                else if (menuItem.ItemCategory == "Momo")
-                {
-                    MomoItems.Add(menuItem);
-                }
-                else if (menuItem.ItemCategory == "Noodles")
-                {
-                    NoodleItems.Add(menuItem);
-                }
-                else if (menuItem.ItemCategory == "Burgers And Sandwiches")
-                {
-                    SandwichItems.Add(menuItem);
-                }
-                else if (menuItem.ItemCategory == "Breakfast")
-                {
-                    BreakfastItems.Add(menuItem);
-                }
-                else
-                {
-                    DrinkItems.Add(menuItem);
+                    case CategoryConstants.Snacks:
+                        SnackItems.Add(menuItem);
+                        break;
+                    case CategoryConstants.Momo:
+                        MomoItems.Add(menuItem);
+                        break;
+                    case CategoryConstants.Noodles:
+                        NoodleItems.Add(menuItem);
+                        break;
+                    case CategoryConstants.BurgersAndSandwiches:
+                        SandwichItems.Add(menuItem);
+                        break;
+                    case CategoryConstants.Breakfast:
+                        BreakfastItems.Add(menuItem);
+                        break;
+                    case CategoryConstants.Drinks:
+                        DrinkItems.Add(menuItem);
+                        break;
+                    default:
+                        break;
                 }
             }
         }

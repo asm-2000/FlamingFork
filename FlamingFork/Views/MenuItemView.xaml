@@ -46,18 +46,18 @@
                 <HorizontalStackLayout Margin="10,0">
                     <Label FontSize="12" Text="{Binding Quantity, StringFormat='Quantity:   {0}'}" />
                     <ImageButton
-                        Margin="15,0,5,0"
+                        Margin="6,0,5,0"
                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DecreaseQuantityCommand}"
                         CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
-                        HeightRequest="15"
+                        HeightRequest="20"
                         Source="minus.png"
-                        WidthRequest="16" />
+                        WidthRequest="20" />
                     <ImageButton
                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=IncreaseQuantityCommand}"
                         CommandParameter="{Binding Source={x:Reference ItemName}, Path=Text}"
-                        HeightRequest="15"
+                        HeightRequest="22"
                         Source="add.png"
-                        WidthRequest="15" />
+                        WidthRequest="22" />
                 </HorizontalStackLayout>
                 <Label
                     Margin="10,0"
