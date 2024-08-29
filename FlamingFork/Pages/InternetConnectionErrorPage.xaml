@@ -8,7 +8,7 @@
     x:DataType="viewmodel:InternetConnectionErrorViewModel"
     Shell.FlyoutBehavior="Disabled"
     Shell.NavBarIsVisible="False">
-    <VerticalStackLayout Margin="0,200">
+    <VerticalStackLayout Margin="0,200" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
         <Image
             HeightRequest="150"
             Source="no_internet_icon.png"
