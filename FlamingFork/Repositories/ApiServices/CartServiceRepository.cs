@@ -15,7 +15,7 @@ namespace FlamingFork.Repositories.ApiServices
         public CartServiceRepository()
         {
             _HttpClient = new HttpClient();
-            _Address = "10.10.100.53:8080";
+            _Address = "10.10.100.56:8080";
         }
 
         #region Item Adder
