@@ -115,9 +115,18 @@ namespace FlamingFork.ViewModels
                 IsRegistering = true;
                 CustomerModel customerDetails = new CustomerModel(FullName,Email,Password,Address,ContactNumber);
                 RegistrationMessage = await _AuthenticationService.RegisterCustomer(customerDetails);
-                await Shell.Current.Navigation.PopAsync();
+                if(GetRegistrationStatus())
+                {
+                    await Task.Delay(1000);
+                    await Shell.Current.Navigation.PopAsync();
+                }
                 IsRegistering = false;
             }
+        }
+
+        public bool GetRegistrationStatus()
+        {
+            return RegistrationMessage == "User registered successfully" ? true:false;
         }
     }
 }
