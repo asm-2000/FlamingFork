@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FlamingFork.Pages.UserDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:FlamingFork.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
+    Title="Profile"
+    x:DataType="viewmodel:UserDetailsViewModel">
+    <!--#region NavBar Contents-->
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="0.7*,0.3*">
+            <Label
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=Title}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                            Dark={StaticResource PrimaryDarkText}}"
+                VerticalTextAlignment="Center" />
+            <Image
+                Grid.Column="1"
+                AbsoluteLayout.LayoutBounds="0.9,0"
+                HeightRequest="25"
+                Source="profile_icon.png"
+                WidthRequest="25" />
+        </Grid>
+    </Shell.TitleView>
+    <!--#endregion-->
+    <VerticalStackLayout>
+        <Border
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding UpdateMessageVisibility}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="{Binding UpdateMessage}"
+                TextColor="{StaticResource White}" />
+        </Border>
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsUpdating}"
+            IsVisible="{Binding IsUpdating}"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <VerticalStackLayout Padding="30" IsVisible="{Binding ShowUpdateUI}">
+            <Border
+                Margin="0,0,0,60"
+                Padding="5,20"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource White}}"
+                StrokeShape="RoundRectangle 0,20,20,0">
+                <Label
+                    FontSize="30"
+                    HorizontalTextAlignment="Center"
+                    Text="Update User Details"
+                    TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                Dark={StaticResource Gold}}"
+                    VerticalTextAlignment="Center" />
+            </Border>
+            <Label
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Address:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="DeliveryAddress"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Placeholder="Enter Delivery Address"
+                    Text="{Binding NewAddress}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateAddressCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding AddressError}" TextColor="{StaticResource PrimaryDark}" />
+            <Label
+                Margin="0,5"
+                FontAttributes="Bold"
+                FontSize="16"
+                Text="Contact Number:" />
+            <Border
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 7">
+                <Entry
+                    x:Name="ContactNumber"
+                    FontSize="15"
+                    HeightRequest="50"
+                    Keyboard="Telephone"
+                    Placeholder="Enter Your Contact Number"
+                    Text="{Binding NewContact}">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding ValidateContactNumberCommand}" EventName="TextChanged" />
+                    </Entry.Behaviors>
+                </Entry>
+            </Border>
+            <Label Text="{Binding ContactNumberError}" TextColor="{StaticResource PrimaryDark}" />
+            <Grid
+                Margin="0,20"
+                ColumnDefinitions="0.5*,0.5*"
+                ColumnSpacing="20">
+                <Button
+                    Padding="0"
+                    BackgroundColor="{StaticResource MidnightBlue}"
+                    Command="{Binding CancelUpdateCommand}"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    Text="Cancel" />
+                <Button
+                    Grid.Column="1"
+                    Padding="0"
+                    Command="{Binding UpdateCustomerDetailsCommand}"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    Text="Update Details" />
+            </Grid>
+        </VerticalStackLayout>
+        <VerticalStackLayout
+            Padding="30"
+            IsVisible="{Binding ShowDetailsUI}"
+            Spacing="30">
+            <ImageButton
+                BackgroundColor="{StaticResource Transparent}"
+                Command="{Binding MakeUpdateUIVisibleCommand}"
+                HeightRequest="30"
+                HorizontalOptions="End"
+                Source="edit_icon.png" />
+            <Image
+                Margin="0,0,0,40"
+                HeightRequest="100"
+                Source="user_icon.png" />
+            <Label
+                x:DataType="model:CustomerModel"
+                BindingContext="{Binding CustomerDetails}"
+                FontAttributes="Bold"
+                FontSize="30"
+                HorizontalTextAlignment="Center"
+                Text="{Binding CustomerName}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                            Dark={StaticResource Gray200}}" />
+            <Border
+                x:DataType="model:CustomerModel"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White},
+                                                  Dark={StaticResource DeepGray}}"
+                BindingContext="{Binding CustomerDetails}"
+                Stroke="{AppThemeBinding Light={StaticResource Gray300},
+                                         Dark={StaticResource Transparent}}"
+                StrokeShape="RoundRectangle 20">
+                <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Padding="10" Spacing="5">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalTextAlignment="Center"
+                            Text="Email"
+                            TextColor="{AppThemeBinding Light={StaticResource Secondary},
+                                                        Dark={StaticResource Gold}}" />
+                        <Label
+                            CharacterSpacing="0.5"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Email}"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray300},
+                                                        Dark={StaticResource Gray300}}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Padding="10" Spacing="5">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalTextAlignment="Center"
+                            Text="Delivery Address"
+                            TextColor="{AppThemeBinding Light={StaticResource Secondary},
+                                                        Dark={StaticResource Gold}}" />
+                        <Label
+                            CharacterSpacing="0.5"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            MaxLines="2"
+                            Text="{Binding Address}"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray300},
+                                                        Dark={StaticResource Gray300}}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Padding="10" Spacing="5">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            HorizontalTextAlignment="Center"
+                            Text="Contact Number"
+                            TextColor="{AppThemeBinding Light={StaticResource Secondary},
+                                                        Dark={StaticResource Gold}}" />
+                        <Label
+                            CharacterSpacing="0.5"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Contact}"
+                            TextColor="{AppThemeBinding Light={StaticResource Gray300},
+                                                        Dark={StaticResource Gray300}}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

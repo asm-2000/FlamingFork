@@ -124,7 +124,7 @@ namespace FlamingFork.Helper.Utilities
         public static string AddressValidator(string address)
         {
             string addressError;
-            var addressPattern = @"^(Kathmandu|Lalitpur),\s*\d+,\s*[A-Za-z\s]+$";
+            var addressPattern = @"^(?i)(Kathmandu|Lalitpur),\s*([\w\s-]+),\s*([\w\s]+)(,\s*[\w\s-]+)*$";
             Regex regex = new(addressPattern);
             if (string.IsNullOrWhiteSpace(address))
             {
@@ -132,7 +132,7 @@ namespace FlamingFork.Helper.Utilities
             }
             else if (!regex.IsMatch(address))
             {
-                addressError = "Please mention city (Kathmandu/Lalitpur), ward and street separated by commas";
+                addressError = "Please follow the format: city,ward-name,street,prominent landmark";
             }
             else
             {

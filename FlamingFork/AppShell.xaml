@@ -66,6 +66,11 @@
             ContentTemplate="{DataTemplate page:OrderPage}"
             Icon="order_logo.png"
             Route="OrderPage" />
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate page:UserDetailsPage}"
+            Icon="profile_icon.png"
+            Route="UserDetailPage" />
     </FlyoutItem>
     <!--#endregion-->
     <!--#region Flyout Footer-->
