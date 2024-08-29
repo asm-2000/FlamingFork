@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FlamingFork.Pages.CartPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:FlamingFork.Models"
+    xmlns:view="clr-namespace:FlamingFork.Views"
+    xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
+    Title="Your Cart"
+    x:DataType="viewmodel:CartViewModel">
+    <!--#region NavBar Contents-->
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="0.7*,0.3*">
+            <Label
+                Grid.Column="0"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=Title}"
+                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                            Dark={StaticResource PrimaryDarkText}}"
+                VerticalTextAlignment="Center" />
+            <Image
+                Grid.Column="1"
+                AbsoluteLayout.LayoutBounds="0.9,0"
+                HeightRequest="25"
+                Source="cart_logo.png"
+                WidthRequest="25" />
+        </Grid>
+    </Shell.TitleView>
+    <!--#endregion-->
+    <VerticalStackLayout Padding="20,10">
+        <!--#region Order Status UI-->
+        <Border
+            Margin="5,5"
+            Padding="5"
+            BackgroundColor="{StaticResource Primary}"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CheckoutStatusVisible}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10">
+            <Label
+                FontAttributes="Bold"
+                FontSize="12"
+                Text="{Binding CheckoutStatus}"
+                TextColor="{StaticResource White}" />
+        </Border>
+        <!--#endregion-->
+        <!--#region Title-->
+        <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <Border
+                Padding="10"
+                Stroke="{AppThemeBinding Light={StaticResource Gold},
+                                         Dark={StaticResource Primary}}"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="3">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                Dark={StaticResource Gray300}}"
+                    VerticalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                FontSize="25"
+                                Text="Items "
+                                TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                            Dark={StaticResource Gold}}" />
+                            <Span Text="in your cart:" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </Border>
+            <Border
+                Margin="10"
+                HorizontalOptions="End"
+                StrokeShape="RoundRectangle 10"
+                WidthRequest="100">
+                <Button
+                    Padding="0"
+                    BackgroundColor="{StaticResource Transparent}"
+                    Command="{Binding ClearAllCartItemsCommand}"
+                    FontSize="14"
+                    HeightRequest="30"
+                    Text="Clear Cart"
+                    TextColor="{StaticResource Gray400}" />
+            </Border>
+        </VerticalStackLayout>
+        <!--#endregion-->
+        <ActivityIndicator
+            BackgroundColor="{StaticResource Transparent}"
+            HeightRequest="20"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsFetching}"
+            IsVisible="{Binding IsFetching}"
+            WidthRequest="20"
+            Color="{AppThemeBinding Light={StaticResource Gray400},
+                                    Dark={StaticResource Gray200}}" />
+        <!--#region Empty Cart UI-->
+        <VerticalStackLayout
+            Margin="0,180"
+            Padding="20"
+            HorizontalOptions="Center"
+            IsVisible="{Binding CartIsEmpty}"
+            VerticalOptions="Center">
+            <Image
+                HeightRequest="150"
+                Source="empty_cart.png"
+                WidthRequest="150" />
+            <Label
+                Margin="0,20"
+                CharacterSpacing="1"
+                FontAttributes="Bold"
+                FontSize="25"
+                Text="So empty...   :("
+                TextColor="{StaticResource Gray300}" />
+        </VerticalStackLayout>
+        <!--#endregion-->
+        <!--#region Cart Content-->
+        <ScrollView
+            Padding="10,0"
+            HeightRequest="440"
+            IsVisible="{Binding HasFetched}"
+            Orientation="Vertical">
+            <CollectionView ItemsSource="{Binding CartItems}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <view:CartItemView />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <!--#endregion-->
+        <!--#region Footer UI-->
+        <VerticalStackLayout IsVisible="{Binding HasFetched}">
+            <Grid Margin="10,20" ColumnDefinitions="0.5*,0.5*">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text="{Binding TotalItems, StringFormat='Total items:  {0}'}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                Dark={StaticResource Gray300}}" />
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HorizontalOptions="End"
+                    Text="{Binding TotalPrice, StringFormat='Total price: Rs {0}'}"
+                    TextColor="{AppThemeBinding Light={StaticResource Gray600},
+                                                Dark={StaticResource Gray300}}" />
+            </Grid>
+            <BoxView BackgroundColor="{StaticResource Gray400}" HeightRequest="1" />
+            <Button
+                Margin="10,20"
+                CharacterSpacing="1"
+                Command="{Binding CheckoutFromCartCommand}"
+                FontAttributes="Bold"
+                FontSize="20"
+                Text="Checkout" />
+        </VerticalStackLayout>
+        <!--#endregion-->
+    </VerticalStackLayout>
+</ContentPage>

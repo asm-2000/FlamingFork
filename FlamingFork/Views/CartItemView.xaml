@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="FlamingFork.Views.CartItemView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:FlamingFork.Models"
+    xmlns:viewmodel="clr-namespace:FlamingFork.ViewModels"
+    x:DataType="model:CartItemModel">
+    <VerticalStackLayout>
+        <Border
+            Margin="0,2"
+            Padding="5"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Gray50},
+                                              Dark={StaticResource Black}}"
+            Stroke="{StaticResource Transparent}"
+            StrokeShape="RoundRectangle 10"
+            VerticalOptions="Start">
+            <Grid
+                Margin="0,5"
+                ColumnDefinitions="0.2*,0.5*,0.1*"
+                ColumnSpacing="5"
+                RowDefinitions="auto">
+                <Border
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    Stroke="{StaticResource Transparent}"
+                    StrokeShape="RoundRectangle 10"
+                    WidthRequest="60">
+                    <Image Source="{Binding CartItemImageUrl}" />
+                </Border>
+                <VerticalStackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    Spacing="2">
+                    <Label
+                        x:Name="ItemName"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{Binding CartItemName}"
+                        TextColor="{AppThemeBinding Light={StaticResource Primary},
+                                                    Dark={StaticResource Gray200}}" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="{Binding CartItemPrice, StringFormat='Rs {0}'}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                    Dark={StaticResource Gray500}}" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="{Binding Quantity, StringFormat='Quantity: {0}'}"
+                        TextColor="{AppThemeBinding Light={StaticResource Gray500},
+                                                    Dark={StaticResource Gray500}}" />
+                </VerticalStackLayout>
+                <ImageButton
+                    Grid.Column="2"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CartViewModel}}, Path=DeleteCartItemCommand}"
+                    CommandParameter="{Binding Source={Reference ItemName}, Path=Text}"
+                    HeightRequest="25"
+                    HorizontalOptions="End"
+                    Source="trash.png"
+                    VerticalOptions="Center"
+                    WidthRequest="30" />
+            </Grid>
+        </Border>
+    </VerticalStackLayout>
+</ContentView>
